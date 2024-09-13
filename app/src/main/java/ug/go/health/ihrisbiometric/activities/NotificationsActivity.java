@@ -2,7 +2,6 @@ package ug.go.health.ihrisbiometric.activities;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,7 +18,6 @@ import retrofit2.Response;
 import ug.go.health.ihrisbiometric.R;
 import ug.go.health.ihrisbiometric.adapters.NotificationListAdapter;
 import ug.go.health.ihrisbiometric.models.NotificationListResponse;
-import ug.go.health.ihrisbiometric.models.User;
 import ug.go.health.ihrisbiometric.services.ApiInterface;
 import ug.go.health.ihrisbiometric.services.ApiService;
 import ug.go.health.ihrisbiometric.services.SessionService;
@@ -37,7 +35,7 @@ public class NotificationsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_notifications);
+        setContentView(R.layout.fragment_notifications);
         Toolbar toolbar = findViewById(R.id.notifications_toolbar);
         toolbar.setTitle("Notifications");
 

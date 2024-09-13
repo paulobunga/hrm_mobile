@@ -46,8 +46,6 @@ public class NotificationsFragment extends Fragment {
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        emptyView = rootView.findViewById(R.id.empty_view);
-
         session = new SessionService(getContext());
 
         String token = session.getToken();
@@ -95,7 +93,7 @@ public class NotificationsFragment extends Fragment {
 
         session = new SessionService(getContext());
 
-        String token = session.getToken();
+        token = session.getToken();
         apiService = ApiService.getApiInterface(getContext(), token);
 
         mRecyclerView.setVisibility(View.GONE);
