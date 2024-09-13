@@ -151,7 +151,7 @@ public class HomeFragment extends Fragment {
         LinearLayout notificationsOption = view.findViewById(R.id.notifications_option);
         notificationsOption.setOnClickListener(v -> {
             // Handle notifications option click
-            // For example: navController.navigate(R.id.action_homeFragment_to_notificationsFragment);
+            Navigation.findNavController(requireView()).navigate(R.id.action_homeFragment_to_notificationsFragment);
             bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
         });
 
