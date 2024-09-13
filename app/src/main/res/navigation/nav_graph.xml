@@ -67,6 +67,11 @@
         android:name="ug.go.health.ihrisbiometric.activities.OutOfStationActivity"
         android:label="Out of Station" />
 
+    <fragment
+        android:id="@+id/notificationsFragment"
+        android:name="ug.go.health.ihrisbiometric.fragments.NotificationsFragment"
+        android:label="Notifications" />
+
     <activity
         android:id="@+id/aboutProjectActivity"
         android:name="ug.go.health.ihrisbiometric.activities.AboutProjectActivity"
