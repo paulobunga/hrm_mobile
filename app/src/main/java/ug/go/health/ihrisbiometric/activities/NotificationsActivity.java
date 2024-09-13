@@ -65,7 +65,7 @@ public class NotificationsActivity extends AppCompatActivity {
         emptyView = getLayoutInflater().inflate(R.layout.layout_empty_view, null);
         layoutParams.addRule(RelativeLayout.BELOW, R.id.clock_history_toolbar);
 
-        ((RelativeLayout) findViewById(R.id.activity_notifications)).addView(emptyView, layoutParams);
+        ((RelativeLayout) findViewById(R.id.fragment_notifications_container)).addView(emptyView, layoutParams);
 
         session = new SessionService(this);
 
