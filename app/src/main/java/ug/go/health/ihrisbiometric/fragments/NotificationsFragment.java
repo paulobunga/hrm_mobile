@@ -46,6 +46,45 @@ public class NotificationsFragment extends Fragment {
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        emptyView = rootView.findViewById(R.id.empty_view);
+
+        session = new SessionService(getContext());
+
+        String token = session.getToken();
+        apiService = ApiService.getApiInterface(getContext(), token);
+
+        mRecyclerView.setVisibility(View.GONE);
+        emptyView.setVisibility(View.VISIBLE);
+
+        apiService.getNotificationList().enqueue(new Callback<NotificationListResponse>() {
+            @Override
+            public void onResponse(Call<NotificationListResponse> call, Response<NotificationListResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    mNotificationsList.addAll(response.body().getNotifications());
+                    mAdapter.notifyDataSetChanged();
+
+                    if (mNotificationsList.isEmpty()) {
+                        mRecyclerView.setVisibility(View.GONE);
+                        emptyView.setVisibility(View.VISIBLE);
+                    } else {
+                        mRecyclerView.setVisibility(View.VISIBLE);
+                        emptyView.setVisibility(View.GONE);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<NotificationListResponse> call, Throwable t) {
+                // Handle failure
+            }
+        });
+
+        mRecyclerView = rootView.findViewById(R.id.rv_notification_list);
+        mNotificationsList = new ArrayList<>();
+        mAdapter = new NotificationListAdapter(mNotificationsList);
+        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
         emptyView = getLayoutInflater().inflate(R.layout.layout_empty_view, null);
         RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.MATCH_PARENT,
