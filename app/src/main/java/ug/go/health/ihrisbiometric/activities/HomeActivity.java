@@ -89,6 +89,15 @@ public class HomeActivity extends AppCompatActivity {
 
         observeViewModel();
         fetchFacilitiesAndStaff();
+
+        // Set visibility based on device type
+        DeviceSettings deviceSettings = sessionService.getDeviceSettings();
+        if ("Mobile".equals(deviceSettings.getDeviceType())) {
+            SwitchCompat scanMethodSwitch = findViewById(R.id.scan_method_switch);
+            TextView useFaceRecognition = findViewById(R.id.use_face_recognition);
+            if (scanMethodSwitch != null) scanMethodSwitch.setVisibility(View.GONE);
+            if (useFaceRecognition != null) useFaceRecognition.setVisibility(View.GONE);
+        }
     }
 
     private void observeViewModel() {
