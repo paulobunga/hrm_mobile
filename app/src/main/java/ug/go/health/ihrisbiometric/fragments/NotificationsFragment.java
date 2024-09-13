@@ -52,7 +52,9 @@ public class NotificationsFragment extends Fragment {
         apiService = ApiService.getApiInterface(getContext(), token);
 
         mRecyclerView.setVisibility(View.GONE);
-        emptyView.setVisibility(View.VISIBLE);
+        if (emptyView != null) {
+            emptyView.setVisibility(View.VISIBLE);
+        }
 
         apiService.getNotificationList().enqueue(new Callback<NotificationListResponse>() {
             @Override
@@ -63,10 +65,14 @@ public class NotificationsFragment extends Fragment {
 
                     if (mNotificationsList.isEmpty()) {
                         mRecyclerView.setVisibility(View.GONE);
-                        emptyView.setVisibility(View.VISIBLE);
+                        if (emptyView != null) {
+                            emptyView.setVisibility(View.VISIBLE);
+                        }
                     } else {
                         mRecyclerView.setVisibility(View.VISIBLE);
-                        emptyView.setVisibility(View.GONE);
+                        if (emptyView != null) {
+                            emptyView.setVisibility(View.GONE);
+                        }
                     }
                 }
             }
