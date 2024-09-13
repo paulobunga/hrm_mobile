@@ -127,20 +127,26 @@ public class HomeActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void initializeScanner() {
         DeviceSettings deviceSettings = sessionService.getDeviceSettings();
-        if (deviceSettings != null && "Scanner".equals(deviceSettings.getDeviceType())) {
-            if ("fingerprint".equals(deviceSettings.getScanMethod())) {
-                if (scanner != null) {
-                    scanner.init(this, this::handleScannerEvent);
-                } else {
-                    scanner = new ScannerLibrary(this, this::handleScannerEvent);
-                    String deviceModel = Build.MODEL;
-                    if ("U9100S".equals(deviceModel)) {
-                        scanner.OpenDevice("/dev/ttyMT3", 115200);
-                    } else if ("U9000".equals(deviceModel)) {
-                        scanner.OpenDevice("/dev/ttyS3", 115200);
+        if (deviceSettings != null) {
+            if ("Scanner".equals(deviceSettings.getDeviceType())) {
+                if ("fingerprint".equals(deviceSettings.getScanMethod())) {
+                    if (scanner != null) {
+                        scanner.init(this, this::handleScannerEvent);
+                    } else {
+                        scanner = new ScannerLibrary(this, this::handleScannerEvent);
+                        String deviceModel = Build.MODEL;
+                        if ("U9100S".equals(deviceModel)) {
+                            scanner.OpenDevice("/dev/ttyMT3", 115200);
+                        } else if ("U9000".equals(deviceModel)) {
+                            scanner.OpenDevice("/dev/ttyS3", 115200);
+                        }
+                        new Handler().postDelayed(() -> scanner.Run_CmdGetEmptyID(), 2000);
                     }
-                    new Handler().postDelayed(() -> scanner.Run_CmdGetEmptyID(), 2000);
                 }
+            } else if ("Mobile".equals(deviceSettings.getDeviceType())) {
+                // Mobile devices will only use face recognition by default
+                deviceSettings.setScanMethod("face");
+                sessionService.setDeviceSettings(deviceSettings);
             }
         }
     }

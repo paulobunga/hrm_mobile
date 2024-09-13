@@ -240,7 +240,8 @@
                         android:layout_weight="1"
                         android:checked="false"
                         android:paddingHorizontal="20dp"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        android:visibility="@{deviceType == 'mobile' ? View.GONE : View.VISIBLE}" />
 
                     <TextView
                         android:layout_centerInParent="true"
@@ -250,7 +251,8 @@
                         android:layout_height="wrap_content"
                         android:text="Face Scan"
                         android:textColor="@color/accent_color"
-                        android:textStyle="normal" />
+                        android:textStyle="normal"
+                        android:visibility="@{deviceType == 'mobile' ? View.GONE : View.VISIBLE}" />
                 </RelativeLayout>
             </LinearLayout>
         </LinearLayout>
