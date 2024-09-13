@@ -119,6 +119,27 @@
             android:textSize="16sp" />
     </LinearLayout>
 
+    <!-- New Notifications Option -->
+    <LinearLayout
+        android:id="@+id/notifications_option"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp">
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_notifications" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="Notifications"
+            android:textSize="16sp" />
+    </LinearLayout>
+
     <!-- Space to push the logout button to the bottom -->
     <Space
         android:layout_width="match_parent"
