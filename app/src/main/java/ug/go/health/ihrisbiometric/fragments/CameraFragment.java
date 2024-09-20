@@ -267,6 +267,9 @@ public class CameraFragment extends Fragment {
     }
 
     @OptIn(markerClass = ExperimentalGetImage.class)
+    private final Handler debounceHandler = new Handler(Looper.getMainLooper());
+    private final Runnable debounceRunnable = () -> isProcessing = false;
+
     private void processImage(ImageProxy imageProxy, boolean isEnrollment) {
         if (!isFragmentAttached) {
             imageProxy.close();
@@ -338,7 +341,7 @@ public class CameraFragment extends Fragment {
         }
 
         imageProxy.close();
-        isProcessing = false;
+        debounceHandler.postDelayed(debounceRunnable, 1000); // 1000 milliseconds = 1 second
     }
 
     private void enrollFace(Mat mRgbFrame) {
