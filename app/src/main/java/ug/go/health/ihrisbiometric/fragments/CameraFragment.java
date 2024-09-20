@@ -411,11 +411,11 @@ public class CameraFragment extends Fragment {
             requireActivity().runOnUiThread(() -> {
                 if (isFragmentAttached && faceStatusTextView != null) {
                     faceStatusTextView.setText(status);
-                    new Handler(Looper.getMainLooper()).postDelayed(() -> {
-                        if (isFragmentAttached && faceStatusTextView != null) {
-                            faceStatusTextView.setText("");
-                        }
-                    }, 2000); // 5000 milliseconds = 5 seconds
+//                    new Handler(Looper.getMainLooper()).postDelayed(() -> {
+//                        if (isFragmentAttached && faceStatusTextView != null) {
+//                            faceStatusTextView.setText("");
+//                        }
+//                    }, 2000); // 5000 milliseconds = 5 seconds
                 }
             });
         }
