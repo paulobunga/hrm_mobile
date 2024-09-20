@@ -9,8 +9,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import ug.go.health.ihrisbiometric.R;
 import ug.go.health.ihrisbiometric.models.ClockHistory;
@@ -37,7 +39,8 @@ public class ClockHistoryAdapter extends RecyclerView.Adapter<ClockHistoryAdapte
         Date clockTime = clockHistory.getClockTime();
         holder.tvName.setText(name);
         holder.tvClockStatus.setText(clockStatus);
-        holder.tvClockTime.setText(clockTime.toString());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm", Locale.getDefault());
+        holder.tvClockTime.setText(sdf.format(clockTime));
 
     }
 
