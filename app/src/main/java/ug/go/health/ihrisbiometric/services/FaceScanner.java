@@ -180,6 +180,21 @@ public class FaceScanner {
 
         float[] faceBoxes = new float[15];
         JniHelper.getInstance().DetectFace(mRgbFrame.getNativeObjAddr(), faceBoxes);
+
+        // Check if the face is already registered
+        String faceRecognitionResult = JniHelper.getInstance().FaceRecognition(mRgbFrame.getNativeObjAddr(), faceBoxes);
+        try {
+            JSONObject jsonObject = new JSONObject(faceRecognitionResult);
+            String status = jsonObject.getString("status");
+            if (status.equals("USER_ENROLLED")) {
+                Log.d(TAG, "Face is already registered: " + userId);
+                return false;
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        // Register the face
         JniHelper.getInstance().FaceRegister(mRgbFrame.getNativeObjAddr(), userId, faceBoxes);
 
         return true;
