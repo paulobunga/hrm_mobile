@@ -212,6 +212,7 @@ public class CameraFragment extends Fragment {
             } else if ("clock".equals(actionType)) {
                 imageAnalysis = new ImageAnalysis.Builder()
                         .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
+                        .setTargetResolution(new Size(1280, 720)) // Increase resolution to 1280x720
                         .build();
                 imageAnalysis.setAnalyzer(cameraExecutor, this::analyzeImage);
                 cameraProvider.bindToLifecycle((LifecycleOwner) this, cameraSelector, preview, imageAnalysis);
