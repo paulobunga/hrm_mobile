@@ -186,33 +186,56 @@ public class FaceScanner {
     }
 
     public String saveEnrolledFaceImage(Mat mRgbFrame, String userId) {
-        Bitmap bitmap = Bitmap.createBitmap(mRgbFrame.cols(), mRgbFrame.rows(), Bitmap.Config.ARGB_8888);
-        org.opencv.android.Utils.matToBitmap(mRgbFrame, bitmap);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            Bitmap bitmap = Bitmap.createBitmap(mRgbFrame.cols(), mRgbFrame.rows(), Bitmap.Config.ARGB_8888);
+            org.opencv.android.Utils.matToBitmap(mRgbFrame, bitmap);
 
-        String fileName = userId + ".jpg";
-        ContentValues values = new ContentValues();
-        values.put(MediaStore.Images.Media.DISPLAY_NAME, fileName);
-        values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
-        values.put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_PICTURES + File.separator + "iHRIS Biometric/Staff Images");
+            String fileName = userId + ".jpg";
+            ContentValues values = new ContentValues();
+            values.put(MediaStore.Images.Media.DISPLAY_NAME, fileName);
+            values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
+            values.put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_PICTURES + File.separator + "iHRIS Biometric/Staff Images");
 
-        Uri uri = context.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-        if (uri == null) {
-            Log.e(TAG, "Failed to create new MediaStore record.");
-            return null;
-        }
-
-        try (OutputStream out = context.getContentResolver().openOutputStream(uri)) {
-            if (out != null) {
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
-                Log.d(TAG, "Face image saved successfully: " + uri.toString());
-                return uri.toString();
-            } else {
-                Log.e(TAG, "Failed to get output stream.");
+            Uri uri = context.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+            if (uri == null) {
+                Log.e(TAG, "Failed to create new MediaStore record.");
                 return null;
             }
-        } catch (IOException e) {
-            Log.e(TAG, "Error saving face image", e);
-            return null;
+
+            try (OutputStream out = context.getContentResolver().openOutputStream(uri)) {
+                if (out != null) {
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+                    Log.d(TAG, "Face image saved successfully: " + uri.toString());
+                    return uri.toString();
+                } else {
+                    Log.e(TAG, "Failed to get output stream.");
+                    return null;
+                }
+            } catch (IOException e) {
+                Log.e(TAG, "Error saving face image", e);
+                return null;
+            }
+        } else {
+            // Fallback for older versions
+            String imageDirPath = Constants.getImageDir(context) + File.separator + "Staff Images";
+            File imageDir = new File(imageDirPath);
+            if (!imageDir.exists()) {
+                imageDir.mkdirs();
+            }
+
+            String fileName = userId + ".jpg";
+            File imageFile = new File(imageDir, fileName);
+
+            try (FileOutputStream out = new FileOutputStream(imageFile)) {
+                Bitmap bitmap = Bitmap.createBitmap(mRgbFrame.cols(), mRgbFrame.rows(), Bitmap.Config.ARGB_8888);
+                org.opencv.android.Utils.matToBitmap(mRgbFrame, bitmap);
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+                Log.d(TAG, "Face image saved successfully: " + imageFile.getAbsolutePath());
+                return imageFile.getAbsolutePath();
+            } catch (IOException e) {
+                Log.e(TAG, "Error saving face image", e);
+                return null;
+            }
         }
     }
 }
