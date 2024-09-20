@@ -38,7 +38,13 @@ public class ClockHistoryAdapter extends RecyclerView.Adapter<ClockHistoryAdapte
         String clockStatus = clockHistory.getClockStatus();
         Date clockTime = clockHistory.getClockTime();
         holder.tvName.setText(name);
-        holder.tvClockStatus.setText(clockStatus);
+        if ("CLOCK_IN".equals(clockStatus)) {
+            holder.tvClockStatus.setText("Clocked In");
+        } else if ("CLOCK_OUT".equals(clockStatus)) {
+            holder.tvClockStatus.setText("Clocked Out");
+        } else {
+            holder.tvClockStatus.setText(clockStatus);
+        }
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm", Locale.getDefault());
         holder.tvClockTime.setText(sdf.format(clockTime));
 
