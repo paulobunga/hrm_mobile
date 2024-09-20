@@ -317,6 +317,10 @@ public class CameraFragment extends Fragment {
         Utils.bitmapToMat(rotatedBitmap, mRgbFrame);
         Imgproc.cvtColor(mRgbFrame, mRgbFrame, Imgproc.COLOR_BGR2RGB);
 
+        // Resize the image to a consistent size
+        Size size = new Size(640, 480);
+        Imgproc.resize(mRgbFrame, mRgbFrame, size);
+
         FaceScannerResult result = new FaceScannerResult();
         int detectionResult = faceScanner.processImage(mRgbFrame, result);
 
