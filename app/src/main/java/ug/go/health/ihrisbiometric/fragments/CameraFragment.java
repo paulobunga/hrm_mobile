@@ -215,9 +215,9 @@ public class CameraFragment extends Fragment {
             } else if ("clock".equals(actionType)) {
                 imageAnalysis = new ImageAnalysis.Builder()
                         .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
-                        .setOutputImageFormat(ImageAnalysis.OUTPUT_IMAGE_FORMAT_RGBA_8888) // Set output format to JPEG
+                        .setOutputImageFormat(ImageAnalysis.OUTPUT_IMAGE_FORMAT_YUV_420_888) // Maintain output format as YUV for analysis
                         .setResolutionSelector(new ResolutionSelector.Builder()
-                                .setResolutionStrategy(new ResolutionStrategy(new Size(1280, 720), ResolutionStrategy.FALLBACK_RULE_CLOSEST_HIGHER))
+                                .setResolutionStrategy(ResolutionStrategy.HIGHEST_AVAILABLE_STRATEGY) // Use the highest available resolution
                                 .build())
                         .build();
                 imageAnalysis.setAnalyzer(cameraExecutor, this::analyzeImage);

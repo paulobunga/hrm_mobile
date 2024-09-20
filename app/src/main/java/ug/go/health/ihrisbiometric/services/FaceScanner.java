@@ -51,12 +51,6 @@ public class FaceScanner {
     }
 
     public int processImage(Mat mRgbFrame, FaceScannerResult result) {
-        // Ensure the image is in the correct color space
-        Imgproc.cvtColor(mRgbFrame, mRgbFrame, Imgproc.COLOR_BGR2RGB);
-
-        // Resize the image to a consistent size
-        Size size = new Size(640, 480);
-        Imgproc.resize(mRgbFrame, mRgbFrame, size);
 
         float[] faceBoxes = new float[15];
 
