@@ -66,6 +66,9 @@ public class HomeFragment extends Fragment {
 
     private ImageButton btnAttendance;
 
+    private LinearLayout switchHolder;
+
+
     private BottomSheetBehavior<View> bottomSheetBehavior;
     private View overlay;
 
@@ -91,6 +94,7 @@ public class HomeFragment extends Fragment {
         scanMethodSwitch = view.findViewById(R.id.scan_method_switch);
         btnAttendance = view.findViewById(R.id.btn_attendance);
         clockHistoryBtn = view.findViewById(R.id.goto_clock_history);
+        switchHolder = view.findViewById(R.id.switch_holder);
 
         setupClock();
         setupServices();
@@ -100,9 +104,12 @@ public class HomeFragment extends Fragment {
         setupBottomSheet(view);
 
         scanMethod = sessionService.getDeviceSettings().getScanMethod().toString();
+        deviceType = sessionService.getDeviceSettings().getDeviceType().toLowerCase();
 
         setupScanMethodSwitch();
         changeButtonIcons();
+
+
     }
 
     private void setupBottomSheet(View view) {
@@ -194,6 +201,10 @@ public class HomeFragment extends Fragment {
             viewModel.updateScanMethod(newMethod);
             changeButtonIcons();
         });
+
+        if(deviceType.equals("mobile")) {
+            switchHolder.setVisibility(View.GONE);
+        }
     }
 
     private void changeButtonIcons() {

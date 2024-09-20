@@ -45,7 +45,6 @@ import com.google.common.util.concurrent.ListenableFuture;
 import org.opencv.android.Utils;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
-import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 
 import java.nio.ByteBuffer;
@@ -241,7 +240,6 @@ public class CameraFragment extends Fragment {
                 new ImageCapture.OnImageCapturedCallback() {
                     @Override
                     public void onCaptureSuccess(@NonNull ImageProxy image) {
-                        Log.d(TAG, "Enroll User: Image Width ===> " + image.getWidth() + " Image Height " + image.getHeight() );
                         processImage(image, true);
                     }
 
@@ -265,9 +263,6 @@ public class CameraFragment extends Fragment {
         }
 
         isProcessing = true;
-
-        Log.d(TAG, "Clock User: Image Width ===> " + image.getWidth() + " Image Height " + image.getHeight() );
-
         processImage(image, false);
     }
 
@@ -275,7 +270,6 @@ public class CameraFragment extends Fragment {
     private final Handler debounceHandler = new Handler(Looper.getMainLooper());
     private final Runnable debounceRunnable = () -> isProcessing = false;
 
-    @OptIn(markerClass = ExperimentalGetImage.class)
     private void processImage(ImageProxy imageProxy, boolean isEnrollment) {
         if (!isFragmentAttached) {
             imageProxy.close();
@@ -322,10 +316,6 @@ public class CameraFragment extends Fragment {
         Mat mRgbFrame = new Mat(rotatedBitmap.getHeight(), rotatedBitmap.getWidth(), CvType.CV_8UC3);
         Utils.bitmapToMat(rotatedBitmap, mRgbFrame);
         Imgproc.cvtColor(mRgbFrame, mRgbFrame, Imgproc.COLOR_BGR2RGB);
-
-        // Resize the image to a consistent size
-        Size size = new Size(640, 640);
-        Imgproc.resize(mRgbFrame, mRgbFrame, size);
 
         FaceScannerResult result = new FaceScannerResult();
         int detectionResult = faceScanner.processImage(mRgbFrame, result);
