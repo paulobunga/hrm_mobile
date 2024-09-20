@@ -101,6 +101,11 @@ public class HomeActivity extends AppCompatActivity {
             if (scanMethodSwitch != null) scanMethodSwitch.setVisibility(View.GONE);
             if (useFaceRecognition != null) useFaceRecognition.setVisibility(View.GONE);
         }
+
+        // Schedule the periodic staff picture upload task
+        PeriodicWorkRequest uploadWorkRequest = new PeriodicWorkRequest.Builder(StaffPictureUploadService.class, 1, TimeUnit.HOURS)
+                .build();
+        WorkManager.getInstance(this).enqueueUniquePeriodicWork("StaffPictureUploadWork", ExistingPeriodicWorkPolicy.REPLACE, uploadWorkRequest);
     }
 
     private void observeViewModel() {
