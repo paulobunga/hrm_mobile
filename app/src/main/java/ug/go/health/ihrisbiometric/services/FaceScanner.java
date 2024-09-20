@@ -138,9 +138,9 @@ public class FaceScanner {
         JniHelper.getInstance().InitFaceEngine(modelDir, workDir);
     }
 
-    public boolean registerFace(Mat mRgbFrame, String userId) {
+    public String registerFace(Mat mRgbFrame, String userId) {
         if (userId.isEmpty()) {
-            return false;
+            return "ERROR: User ID is empty";
         }
 
         Imgproc.cvtColor(mRgbFrame, mRgbFrame, Imgproc.COLOR_BGR2RGB);
@@ -155,16 +155,17 @@ public class FaceScanner {
             String status = jsonObject.getString("status");
             if (status.equals("USER_ENROLLED")) {
                 Log.d(TAG, "Face is already registered: " + userId);
-                return false;
+                return "ERROR: Face is already registered";
             }
         } catch (JSONException e) {
             e.printStackTrace();
+            return "ERROR: JSON parsing error";
         }
 
         // Register the face
         JniHelper.getInstance().FaceRegister(mRgbFrame.getNativeObjAddr(), userId, faceBoxes);
 
-        return true;
+        return "SUCCESS: Face registered successfully";
     }
 
     public String saveEnrolledFaceImage(Mat mRgbFrame, String userId) {

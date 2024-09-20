@@ -345,9 +345,9 @@ public class CameraFragment extends Fragment {
         if (selectedStaff != null) {
             String userId = selectedStaff.getIhrisPid();
             Log.d(TAG, "enrollFace: Enrolling user with info " + selectedStaff.toJson());
-            boolean enrollmentSuccess = faceScanner.registerFace(mRgbFrame, userId);
+            String enrollmentStatus = faceScanner.registerFace(mRgbFrame, userId);
 
-            if (enrollmentSuccess) {
+            if (enrollmentStatus.startsWith("SUCCESS")) {
                 String imagePath = faceScanner.saveEnrolledFaceImage(mRgbFrame, userId);
                 if (imagePath != null) {
                     selectedStaff.setFaceEnrolled(true);
@@ -363,7 +363,7 @@ public class CameraFragment extends Fragment {
                     updateFaceStatus("Face enrollment successful, but failed to save image");
                 }
             } else {
-                updateFaceStatus("Face enrollment failed. Please try again.");
+                updateFaceStatus(enrollmentStatus);
             }
         } else {
             updateFaceStatus("Error: No staff selected for enrollment");
