@@ -21,6 +21,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -327,7 +328,7 @@ public class CameraFragment extends Fragment {
             }
             imageProxy.close();
             // TODO Re-enable after testing
-            // return;
+             return;
         }
 
         if (isEnrollment) {
@@ -372,48 +373,12 @@ public class CameraFragment extends Fragment {
 
     private void clockInOut(FaceScannerResult result) {
         Log.d(TAG, "clockInOut: " + result.faceInfo.toJson());
-        if (result.faceInfo.isEnrolled) {
-            String ihrisPid = result.faceInfo.ihrisPID;
-            dbService.getStaffRecordByihrisPIDAsync(ihrisPid, new DbService.Callback<StaffRecord>() {
-                @Override
-                public void onResult(StaffRecord staffRecord) {
-                    if (staffRecord != null) {
-                        dbService.getLastClockHistoryAsync(ihrisPid, new DbService.Callback<ClockHistory>() {
-                            @Override
-                            public void onResult(ClockHistory lastClockHistory) {
-                                String clockStatus = (lastClockHistory != null && "CLOCK_IN".equals(lastClockHistory.getClockStatus())) ? "CLOCK_OUT" : "CLOCK_IN";
+        boolean faceDetected = result.faceInfo.faceDetected;
+        if(faceDetected) {
+            updateFaceStatus("Face Detected. Processing...");
 
-                                ClockHistory newClockHistory = new ClockHistory();
-                                newClockHistory.setIhrisPID(ihrisPid);
-                                newClockHistory.setName(staffRecord.getName());
-                                newClockHistory.setClockTime(new Date());
-                                newClockHistory.setClockStatus(clockStatus);
-                                newClockHistory.setSynced(false);
-
-                                dbService.saveClockHistoryAsync(newClockHistory, new DbService.Callback<Boolean>() {
-                                    @Override
-                                    public void onResult(Boolean success) {
-                                        if (success) {
-                                            updateFaceStatus(staffRecord.getName() + " successfully " + (clockStatus.equals("CLOCK_IN") ? "clocked in" : "clocked out") + ".");
-                                            viewModel.setStatus(staffRecord.getName() + " successfully " + (clockStatus.equals("CLOCK_IN") ? "clocked in" : "clocked out") + ".");
-                                        } else {
-                                            updateFaceStatus("Failed to save clock record. Please try again.");
-                                        }
-                                        // Delay navigation to allow user to read the status
-                                        new Handler(Looper.getMainLooper()).postDelayed(() -> navigateBack(), 2000);
-                                    }
-                                });
-                            }
-                        });
-                    } else {
-                        updateFaceStatus("Staff record not found. Please try again or contact support.");
-                        new Handler(Looper.getMainLooper()).postDelayed(() -> navigateBack(), 2000);
-                    }
-                }
-            });
         } else {
-            updateFaceStatus("Face not recognized. Please try again or contact support.");
-            new Handler(Looper.getMainLooper()).postDelayed(() -> navigateBack(), 2000);
+            updateFaceStatus("Face not yet detected.");
         }
     }
 
@@ -447,7 +412,7 @@ public class CameraFragment extends Fragment {
                         if (isFragmentAttached && faceStatusTextView != null) {
                             faceStatusTextView.setText("");
                         }
-                    }, 5000); // 5000 milliseconds = 5 seconds
+                    }, 2000); // 5000 milliseconds = 5 seconds
                 }
             });
         }
