@@ -190,23 +190,26 @@ public class FaceScanner {
         org.opencv.android.Utils.matToBitmap(mRgbFrame, bitmap);
 
         String fileName = userId + ".jpg";
-        File directory = new File(Environment.getExternalStorageDirectory(), "iHRIS Biometric/Staff Images");
-        if (!directory.exists()) {
-            boolean created = directory.mkdirs();
-            if (!created) {
-                Log.e(TAG, "Failed to create directory: " + directory.getAbsolutePath());
-                return null;
-            }
-            Log.d(TAG, "Directory created: " + directory.getAbsolutePath());
+        ContentValues values = new ContentValues();
+        values.put(MediaStore.Images.Media.DISPLAY_NAME, fileName);
+        values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
+        values.put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_PICTURES + File.separator + "iHRIS Biometric/Staff Images");
+
+        Uri uri = context.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+        if (uri == null) {
+            Log.e(TAG, "Failed to create new MediaStore record.");
+            return null;
         }
 
-        File file = new File(directory, fileName);
-        String filePath = file.getAbsolutePath();
-
-        try (FileOutputStream out = new FileOutputStream(file)) {
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
-            Log.d(TAG, "Face image saved successfully: " + filePath);
-            return filePath;
+        try (OutputStream out = context.getContentResolver().openOutputStream(uri)) {
+            if (out != null) {
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+                Log.d(TAG, "Face image saved successfully: " + uri.toString());
+                return uri.toString();
+            } else {
+                Log.e(TAG, "Failed to get output stream.");
+                return null;
+            }
         } catch (IOException e) {
             Log.e(TAG, "Error saving face image", e);
             return null;
