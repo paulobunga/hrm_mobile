@@ -213,6 +213,9 @@ public class CameraFragment extends Fragment {
                         .build();
                 cameraProvider.bindToLifecycle((LifecycleOwner) this, cameraSelector, preview, imageCapture);
             } else if ("clock".equals(actionType)) {
+                imageCapture = new ImageCapture.Builder()
+                        .setCaptureMode(ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY)
+                        .build();
                 imageAnalysis = new ImageAnalysis.Builder()
                         .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
                         .setOutputImageFormat(ImageAnalysis.OUTPUT_IMAGE_FORMAT_YUV_420_888) // Maintain output format as YUV for analysis
@@ -221,7 +224,7 @@ public class CameraFragment extends Fragment {
                                 .build())
                         .build();
                 imageAnalysis.setAnalyzer(cameraExecutor, this::analyzeImage);
-                cameraProvider.bindToLifecycle((LifecycleOwner) this, cameraSelector, preview, imageAnalysis);
+                cameraProvider.bindToLifecycle((LifecycleOwner) this, cameraSelector, preview, imageCapture, imageAnalysis);
             }
         } catch (Exception e) {
             Log.e(TAG, "Use case binding failed", e);
@@ -270,7 +273,26 @@ public class CameraFragment extends Fragment {
         }
 
         isProcessing = true;
-        processImage(image, false);
+        captureImageForAnalysis();
+    }
+
+    private void captureImageForAnalysis() {
+        if (imageCapture == null) return;
+
+        imageCapture.takePicture(cameraExecutor,
+                new ImageCapture.OnImageCapturedCallback() {
+                    @Override
+                    public void onCaptureSuccess(@NonNull ImageProxy image) {
+                        processImage(image, false);
+                    }
+
+                    @Override
+                    public void onError(@NonNull ImageCaptureException exception) {
+                        Log.e(TAG, "Image capture failed", exception);
+                        updateFaceStatus("Image capture failed: " + exception.getMessage());
+                        isProcessing = false;
+                    }
+                });
     }
 
     @OptIn(markerClass = ExperimentalGetImage.class)
