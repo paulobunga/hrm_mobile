@@ -192,7 +192,12 @@ public class FaceScanner {
         String fileName = userId + ".jpg";
         File directory = new File(Environment.getExternalStorageDirectory(), "iHRIS Biometric/Staff Images");
         if (!directory.exists()) {
-            directory.mkdirs();
+            boolean created = directory.mkdirs();
+            if (!created) {
+                Log.e(TAG, "Failed to create directory: " + directory.getAbsolutePath());
+                return null;
+            }
+            Log.d(TAG, "Directory created: " + directory.getAbsolutePath());
         }
 
         File file = new File(directory, fileName);
