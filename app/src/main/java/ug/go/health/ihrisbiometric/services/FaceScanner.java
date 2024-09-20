@@ -138,39 +138,6 @@ public class FaceScanner {
         JniHelper.getInstance().InitFaceEngine(modelDir, workDir);
     }
 
-    public void saveImageToPictures(Context context, Bitmap bitmap, String imageName) {
-        Uri uri = Build.VERSION.SDK_INT >= 29 ? MediaStore.Images.Media.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY)
-                : MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
-
-        Uri imageUri = null;
-
-        try (Cursor cursor = context.getContentResolver().query(uri, new String[]{"_id"}, "_display_name = ?", new String[]{imageName}, null)) {
-            if (cursor != null && cursor.moveToFirst()) {
-                imageUri = ContentUris.withAppendedId(uri, cursor.getLong(cursor.getColumnIndexOrThrow("_id")));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        if (imageUri == null) {
-            ContentValues values = new ContentValues();
-            values.put(MediaStore.Images.Media.DISPLAY_NAME, imageName);
-            values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
-            values.put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_PICTURES);
-            imageUri = context.getContentResolver().insert(uri, values);
-        }
-
-        if (imageUri != null) {
-            try (OutputStream outputStream = context.getContentResolver().openOutputStream(imageUri)) {
-                if (outputStream != null) {
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
     public boolean registerFace(Mat mRgbFrame, String userId) {
         if (userId.isEmpty()) {
             return false;
