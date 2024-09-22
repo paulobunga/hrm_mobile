@@ -1,6 +1,7 @@
 package ug.go.health.hrmattend.services;
 
 import android.content.Context;
+import android.os.Build;
 import android.os.Environment;
 import android.util.Log;
 
@@ -9,7 +10,6 @@ import androidx.work.ListenableWorker;
 import androidx.work.WorkerParameters;
 import androidx.work.ListenableWorker.Result;
 
-import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
 
 import java.io.File;
@@ -26,6 +26,7 @@ import okhttp3.Response;
 
 import ug.go.health.hrmattend.services.SessionService;
 import ug.go.health.hrmattend.models.DeviceSettings;
+import ug.go.health.hrmattend.utils.Constants;
 
 public class StaffPictureUploadService extends ListenableWorker {
     /**
@@ -36,8 +37,6 @@ public class StaffPictureUploadService extends ListenableWorker {
         super(appContext, workerParams);
     }
 
-    private static final String TAG = "StaffPictureUploadService";
-    private static final String IMAGE_DIR = Environment.DIRECTORY_PICTURES + File.separator + "iHRIS Biometric/Staff Images";
     private static final String TAG = "StaffPictureUploadService";
     private static final String IMAGE_DIR = Environment.DIRECTORY_PICTURES + File.separator + "iHRIS Biometric/Staff Images";
 
