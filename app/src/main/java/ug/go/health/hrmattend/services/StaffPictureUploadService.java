@@ -1,6 +1,7 @@
 package ug.go.health.hrmattend.services;
 
 import android.content.Context;
+import android.os.Environment;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -34,7 +35,7 @@ public class StaffPictureUploadService extends ListenableWorker {
 
     private static final String TAG = "StaffPictureUploadService";
     private static final String IMAGE_DIR = Environment.DIRECTORY_PICTURES + File.separator + "iHRIS Biometric/Staff Images";
-    private static final String SERVER_URL = "http://yourserver.com/upload"; // Replace with actual server URL
+    private static final String SERVER_URL = API_URL; // Replace with actual server URL
 
     @NonNull
     @Override
