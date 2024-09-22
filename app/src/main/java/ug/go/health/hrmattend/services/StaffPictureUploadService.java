@@ -24,6 +24,9 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
+import ug.go.health.hrmattend.services.SessionService;
+import ug.go.health.hrmattend.models.DeviceSettings;
+
 public class StaffPictureUploadService extends ListenableWorker {
     /**
      * @param appContext   The application {@link Context}
@@ -35,7 +38,8 @@ public class StaffPictureUploadService extends ListenableWorker {
 
     private static final String TAG = "StaffPictureUploadService";
     private static final String IMAGE_DIR = Environment.DIRECTORY_PICTURES + File.separator + "iHRIS Biometric/Staff Images";
-    private static final String SERVER_URL = API_URL; // Replace with actual server URL
+    private static final String TAG = "StaffPictureUploadService";
+    private static final String IMAGE_DIR = Environment.DIRECTORY_PICTURES + File.separator + "iHRIS Biometric/Staff Images";
 
     @NonNull
     @Override
@@ -44,6 +48,10 @@ public class StaffPictureUploadService extends ListenableWorker {
     }
 
     private Result uploadImages() {
+        SessionService session = new SessionService(getApplicationContext());
+        DeviceSettings deviceSettings = session.getDeviceSettings();
+        String baseUrl = deviceSettings.getServerUrl();
+
         File imageDir;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             imageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "iHRIS Biometric/Staff Images");
@@ -74,7 +82,7 @@ public class StaffPictureUploadService extends ListenableWorker {
                             .build();
 
                     Request request = new Request.Builder()
-                            .url(SERVER_URL)
+                            .url(baseUrl)
                             .post(requestBody)
                             .build();
 
