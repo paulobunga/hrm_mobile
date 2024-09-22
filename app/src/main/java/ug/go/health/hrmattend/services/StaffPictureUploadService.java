@@ -33,7 +33,7 @@ public class StaffPictureUploadService extends ListenableWorker {
     }
 
     private static final String TAG = "StaffPictureUploadService";
-    private static final String IMAGE_DIR = "path_to_staff_images_directory"; // Replace with actual path
+    private static final String IMAGE_DIR = Environment.DIRECTORY_PICTURES + File.separator + "iHRIS Biometric/Staff Images";
     private static final String SERVER_URL = "http://yourserver.com/upload"; // Replace with actual server URL
 
     @NonNull
@@ -43,7 +43,12 @@ public class StaffPictureUploadService extends ListenableWorker {
     }
 
     private Result uploadImages() {
-        File imageDir = new File(getApplicationContext().getFilesDir(), IMAGE_DIR);
+        File imageDir;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            imageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "iHRIS Biometric/Staff Images");
+        } else {
+            imageDir = new File(Constants.getImageDir(getApplicationContext()) + File.separator + "Staff Images");
+        }
         if (!imageDir.exists() || !imageDir.isDirectory()) {
             Log.e(TAG, "Image directory does not exist or is not a directory");
             return Result.failure();
