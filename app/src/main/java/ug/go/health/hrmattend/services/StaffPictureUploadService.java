@@ -17,12 +17,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
+import net.gotev.uploadservice.HttpUploadRequest;
+import net.gotev.uploadservice.HttpUploadTask;
+import net.gotev.uploadservice.UploadService;
+import net.gotev.uploadservice.UploadTask;
+import net.gotev.uploadservice.UploadTaskListener;
 
 import ug.go.health.hrmattend.services.SessionService;
 import ug.go.health.hrmattend.models.DeviceSettings;
@@ -68,40 +67,23 @@ public class StaffPictureUploadService extends ListenableWorker {
             return Result.success();
         }
 
-        OkHttpClient client = new OkHttpClient();
-        List<File> uploadedFiles = new ArrayList<>();
+        UploadService.NAMESPACE = "ug.go.health.hrmattend";
+        UploadService.HTTP_STACK = new HttpUploadTask();
 
         for (File imageFile : imageFiles) {
             if (imageFile.isFile() && imageFile.getName().endsWith(".jpg")) {
                 try {
-                    RequestBody requestBody = new MultipartBody.Builder()
-                            .setType(MultipartBody.FORM)
-                            .addFormDataPart("file", imageFile.getName(),
-                                    RequestBody.create(MediaType.parse("image/jpeg"), imageFile))
-                            .build();
+                    HttpUploadRequest request = new HttpUploadRequest(getApplicationContext(), baseUrl, imageFile.getName())
+                            .addFileToUpload(imageFile.getAbsolutePath(), "image/jpeg", "file")
+                            .setNotificationConfig((context, uploadId) -> new UploadService.NotificationConfig(R.string.app_name))
+                            .setAutoDeleteFilesAfterSuccessfulUpload(true)
+                            .setUsesFixedLengthStreamingMode(true);
 
-                    Request request = new Request.Builder()
-                            .url(baseUrl)
-                            .post(requestBody)
-                            .build();
-
-                    Response response = client.newCall(request).execute();
-                    if (response.isSuccessful()) {
-                        uploadedFiles.add(imageFile);
-                        Log.d(TAG, "Uploaded: " + imageFile.getName());
-                    } else {
-                        Log.e(TAG, "Failed to upload: " + imageFile.getName());
-                    }
-                } catch (IOException e) {
-                    Log.e(TAG, "Error uploading image: " + imageFile.getName(), e);
+                    request.startUpload();
+                    Log.d(TAG, "Upload started: " + imageFile.getName());
+                } catch (Exception e) {
+                    Log.e(TAG, "Error starting upload for image: " + imageFile.getName(), e);
                 }
-            }
-        }
-
-        // Optionally, delete uploaded files
-        for (File uploadedFile : uploadedFiles) {
-            if (!uploadedFile.delete()) {
-                Log.w(TAG, "Failed to delete: " + uploadedFile.getName());
             }
         }
 
