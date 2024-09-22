@@ -148,7 +148,7 @@
                         android:text="Sync Details"
                         android:textAppearance="?attr/textAppearanceHeadline6"/>
 
-                    <ug.go.health.ihrisbiometric.utils.NonScrollableExpandableListView
+                    <ug.go.health.hrmattend.utils.NonScrollableExpandableListView
                         android:id="@+id/expandableListView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

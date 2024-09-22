@@ -42,9 +42,6 @@
             android:name=".activities.DeviceSetupActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.EnrollStaffActivity"
-            android:exported="false" />
-        <activity
             android:name=".activities.OutOfStationActivity"
             android:exported="false" />
         <activity
@@ -67,13 +64,28 @@
         </activity> <!-- Add Provider -->
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="ug.go.health.ihrisbiometric.fileprovider"
+            android:authorities="ug.go.health.hrmattend.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
+
+        <!-- Required: set your sentry.io project identifier (DSN) -->
+        <meta-data android:name="io.sentry.dsn" android:value="https://aad14fce66e4283541a5769ed29f40b6@o1077386.ingest.us.sentry.io/4507996002975744" />
+
+        <!-- enable automatic breadcrumbs for user interactions (clicks, swipes, scrolls) -->
+        <meta-data android:name="io.sentry.traces.user-interaction.enable" android:value="true" />
+        <!-- enable screenshot for crashes -->
+        <meta-data android:name="io.sentry.attach-screenshot" android:value="true" />
+        <!-- enable view hierarchy for crashes -->
+        <meta-data android:name="io.sentry.attach-view-hierarchy" android:value="true" />
+
+        <!-- enable the performance API by setting a sample-rate, adjust in production env -->
+        <meta-data android:name="io.sentry.traces.sample-rate" android:value="1.0" />
+        <!-- enable profiling when starting transactions, adjust in production env -->
+        <meta-data android:name="io.sentry.traces.profiling.sample-rate" android:value="1.0" />
     </application>
 
 </manifest>

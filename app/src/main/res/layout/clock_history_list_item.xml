@@ -18,7 +18,7 @@
             android:layout_height="50dp"
             android:scaleType="centerCrop"
             android:background="@drawable/circle_gray"
-            android:padding="8dp"
+            android:padding="2dp"
             android:src="@drawable/user"/>
 
         <LinearLayout
