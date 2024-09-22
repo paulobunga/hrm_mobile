@@ -1,4 +1,4 @@
-package ug.go.health.ihrisbiometric.models;
+package ug.go.health.hrmattend.models;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

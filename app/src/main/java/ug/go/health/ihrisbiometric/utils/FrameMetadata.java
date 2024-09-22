@@ -1,4 +1,4 @@
-package ug.go.health.ihrisbiometric.utils;
+package ug.go.health.hrmattend.utils;
 
 public class FrameMetadata {
     private final int imageHeight;

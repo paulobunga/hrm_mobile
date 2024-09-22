@@ -1,4 +1,4 @@
-package ug.go.health.ihrisbiometric;
+package ug.go.health.hrmattend;
 
 import android.os.Handler;
 import android.os.Message;

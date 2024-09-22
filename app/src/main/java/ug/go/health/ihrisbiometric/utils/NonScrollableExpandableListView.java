@@ -1,4 +1,4 @@
-package ug.go.health.ihrisbiometric.utils;
+package ug.go.health.hrmattend.utils;
 
 import android.content.Context;
 import android.content.res.TypedArray;

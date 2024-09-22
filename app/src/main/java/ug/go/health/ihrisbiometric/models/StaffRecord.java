@@ -1,4 +1,4 @@
-package ug.go.health.ihrisbiometric.models;
+package ug.go.health.hrmattend.models;
 
 import androidx.room.Entity;
 import androidx.room.Ignore;
