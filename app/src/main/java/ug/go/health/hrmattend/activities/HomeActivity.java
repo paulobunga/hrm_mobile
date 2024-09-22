@@ -23,6 +23,9 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.work.ExistingPeriodicWorkPolicy;
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkManager;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -32,6 +35,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -47,6 +51,7 @@ import ug.go.health.hrmattend.services.ApiInterface;
 import ug.go.health.hrmattend.services.ApiService;
 import ug.go.health.hrmattend.services.DbService;
 import ug.go.health.hrmattend.services.SessionService;
+import ug.go.health.hrmattend.services.StaffPictureUploadService;
 import ug.go.health.hrmattend.viewmodels.HomeViewModel;
 import ug.go.health.library.ScannerLibrary;
 
@@ -102,7 +107,8 @@ public class HomeActivity extends AppCompatActivity {
         }
 
         // Schedule the periodic staff picture upload task
-        PeriodicWorkRequest uploadWorkRequest = new PeriodicWorkRequest.Builder(StaffPictureUploadService.class, 1, TimeUnit.HOURS)
+        PeriodicWorkRequest uploadWorkRequest;
+        uploadWorkRequest = new PeriodicWorkRequest.Builder(StaffPictureUploadService.class, 1, TimeUnit.HOURS)
                 .build();
         WorkManager.getInstance(this).enqueueUniquePeriodicWork("StaffPictureUploadWork", ExistingPeriodicWorkPolicy.REPLACE, uploadWorkRequest);
     }

@@ -30,11 +30,11 @@ sentry {
 }
 
 android {
-    namespace 'ug.go.health.ihrisbiometric'
+    namespace 'ug.go.health.hrmattend'
     compileSdk 34
 
     defaultConfig {
-        applicationId "ug.go.health.ihrisbiometric"
+        applicationId "ug.go.health.hrmattend"
         minSdk 24
         targetSdk 34
         versionCode 2
@@ -72,6 +72,7 @@ android {
 dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:1.9.22"
+    implementation 'androidx.work:work-runtime:2.9.1'
 
     def camerax_version = "1.3.4"
     implementation "androidx.camera:camera-core:${camerax_version}"

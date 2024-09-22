@@ -1,6 +1,5 @@
 package ug.go.health.hrmattend.activities;
 
-import static android.os.Build.VERSION_CODES.R;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -12,6 +11,8 @@ import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
+
+import ug.go.health.hrmattend.R;
 
 public class AboutProjectActivity extends AppCompatActivity {
 
