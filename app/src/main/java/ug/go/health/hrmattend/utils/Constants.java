@@ -1,7 +1,13 @@
 package ug.go.health.hrmattend.utils;
 
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
+import android.provider.MediaStore;
+
 import java.io.File;
 
 public final class Constants {
@@ -32,12 +38,30 @@ public final class Constants {
     }
 
     public static String getImageDir(Context context) {
-        String imageDirPath = getWorkDir(context) + File.separator + "library";
-        File imageDir = new File(imageDirPath);
-        if (!imageDir.exists()) {
-            imageDir.mkdirs();
+        // If Android version is 10 (Q) or above, use MediaStore for scoped storage
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            // Using the MediaStore API for saving files in a public directory
+            ContentResolver resolver = context.getContentResolver();
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, "HRMAttend");
+            contentValues.put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg");
+            contentValues.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_PICTURES + File.separator + "HRMAttend");
+
+            Uri uri = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
+            if (uri != null) {
+                return uri.toString();
+            } else {
+                return null; // Handle the error accordingly
+            }
+        } else {
+            // Fallback for Android versions below 10 (Q)
+            String imageDirPath = getWorkDir(context) + File.separator + "HRMAttend";
+            File imageDir = new File(imageDirPath);
+            if (!imageDir.exists()) {
+                imageDir.mkdirs();
+            }
+            return imageDirPath;
         }
-        return imageDirPath;
     }
 
     public static String getImageListPath(Context context) {

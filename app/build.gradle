@@ -134,5 +134,7 @@ dependencies {
     // Annotation processor
     annotationProcessor "androidx.lifecycle:lifecycle-compiler:2.8.5"
 
+    implementation "net.gotev:uploadservice:4.7.0"
+
     implementation project(':opencv')
 }
