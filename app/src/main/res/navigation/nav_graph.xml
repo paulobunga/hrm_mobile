@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="ug.go.health.hrmattend.fragments.HomeFragment"
+        android:name="ug.go.health.ihrisbiometric.fragments.HomeFragment"
         android:label="Home"
         tools:layout="@layout/fragment_home">
         <action
@@ -31,7 +31,7 @@
 
     <fragment
         android:id="@+id/enrollUserFragment"
-        android:name="ug.go.health.hrmattend.fragments.EnrollUserFragment"
+        android:name="ug.go.health.ihrisbiometric.fragments.EnrollUserFragment"
         android:label="Enroll User"
         tools:layout="@layout/fragment_enroll_user">
 
@@ -44,35 +44,35 @@
 
     <fragment
         android:id="@+id/cameraFragment"
-        android:name="ug.go.health.hrmattend.fragments.CameraFragment"
+        android:name="ug.go.health.ihrisbiometric.fragments.CameraFragment"
         android:label="Camera"
         tools:layout="@layout/fragment_camera" />
 
     <fragment
         android:id="@+id/clockHistoryFragment"
-        android:name="ug.go.health.hrmattend.fragments.ClockHistoryFragment"
+        android:name="ug.go.health.ihrisbiometric.fragments.ClockHistoryFragment"
         android:label="Clock History"
         tools:layout="@layout/fragment_clock_history" />
 
     <fragment
         android:id="@+id/syncFragment"
-        android:name="ug.go.health.hrmattend.fragments.DataSyncFragment"
+        android:name="ug.go.health.ihrisbiometric.fragments.DataSyncFragment"
         android:label="Sync"
         tools:layout="@layout/fragment_data_sync" />
 
     <activity
         android:id="@+id/deviceSetupActivity"
-        android:name="ug.go.health.hrmattend.activities.DeviceSetupActivity"
+        android:name="ug.go.health.ihrisbiometric.activities.DeviceSetupActivity"
         android:label="Device Setup" />
 
     <activity
         android:id="@+id/outOfStationActivity"
-        android:name="ug.go.health.hrmattend.activities.OutOfStationActivity"
+        android:name="ug.go.health.ihrisbiometric.activities.OutOfStationActivity"
         android:label="Out of Station" />
 
     <fragment
         android:id="@+id/notificationsFragment"
-        android:name="ug.go.health.hrmattend.fragments.NotificationsFragment"
+        android:name="ug.go.health.ihrisbiometric.fragments.NotificationsFragment"
         android:label="Notifications"
         tools:layout="@layout/fragment_notifications">
         <action
@@ -82,7 +82,7 @@
 
     <activity
         android:id="@+id/aboutProjectActivity"
-        android:name="ug.go.health.hrmattend.activities.AboutProjectActivity"
+        android:name="ug.go.health.ihrisbiometric.activities.AboutProjectActivity"
         android:label="About Project" />
 
 </navigation>

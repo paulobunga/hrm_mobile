@@ -13,8 +13,8 @@ import android.os.Environment;
 import android.os.SystemClock;
 import android.widget.TextView;
 
-import ug.go.health.hrmattend.ScannerEventListener;
-import ug.go.health.hrmattend.StatusHandler;
+import ug.go.health.ihrisbiometric.ScannerEventListener;
+import ug.go.health.ihrisbiometric.StatusHandler;
 
 public class ScannerLibrary {
 

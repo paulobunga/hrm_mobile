@@ -64,7 +64,7 @@
         </activity> <!-- Add Provider -->
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="ug.go.health.hrmattend.fileprovider"
+            android:authorities="ug.go.health.ihrisbiometric.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data

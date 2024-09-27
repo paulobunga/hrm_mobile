@@ -30,11 +30,11 @@ sentry {
 }
 
 android {
-    namespace 'ug.go.health.hrmattend'
+    namespace 'ug.go.health.ihrisbiometric'
     compileSdk 34
 
     defaultConfig {
-        applicationId "ug.go.health.hrmattend"
+        applicationId "ug.go.health.ihrisbiometric"
         minSdk 24
         targetSdk 34
         versionCode 2

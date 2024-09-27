@@ -1,4 +1,4 @@
-package ug.go.health.hrmattend;
+package ug.go.health.ihrisbiometric;
 
 import org.junit.Test;
 
