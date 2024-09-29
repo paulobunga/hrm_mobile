@@ -17,6 +17,8 @@ import ug.go.health.ihrisbiometric.models.FingerprintUploadResponse;
 import ug.go.health.ihrisbiometric.models.LoginRequest;
 import ug.go.health.ihrisbiometric.models.LoginResponse;
 import ug.go.health.ihrisbiometric.models.NotificationListResponse;
+import ug.go.health.ihrisbiometric.models.OutOfStationRequest;
+import ug.go.health.ihrisbiometric.models.OutOfStationResponse;
 import ug.go.health.ihrisbiometric.models.StaffListResponse;
 import ug.go.health.ihrisbiometric.models.StaffRecord;
 
@@ -69,4 +71,5 @@ public interface ApiInterface {
     Call<FingerprintUploadResponse> uploadFingerprint(
             @Part MultipartBody.Part file
     );
+
 }
