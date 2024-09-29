@@ -40,6 +40,16 @@ public class NotificationsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_notifications, container, false);
 
+        Toolbar toolbar = rootView.findViewById(R.id.notifications_toolbar);
+        toolbar.setTitle("Notifications");
+        toolbar.setNavigationIcon(R.drawable.ic_back);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().onBackPressed();
+            }
+        });
+
         mRecyclerView = rootView.findViewById(R.id.rv_notification_list);
         mNotificationsList = new ArrayList<>();
         mAdapter = new NotificationListAdapter(mNotificationsList);
