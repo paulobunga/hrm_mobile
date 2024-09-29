@@ -22,6 +22,7 @@ import ug.go.health.ihrisbiometric.services.ApiInterface;
 import ug.go.health.ihrisbiometric.services.ApiService;
 import ug.go.health.ihrisbiometric.services.DbService;
 import ug.go.health.ihrisbiometric.services.SessionService;
+import ug.go.health.ihrisbiometric.services.SessionService;
 
 public class DataSyncViewModel extends AndroidViewModel {
     private static final String TAG = "DataSyncViewModel";
@@ -49,6 +50,7 @@ public class DataSyncViewModel extends AndroidViewModel {
     public DataSyncViewModel(@NonNull Application application) {
         super(application);
         dbService = new DbService(application.getApplicationContext());
+        SessionService sessionService = new SessionService(application.getApplicationContext());
         SessionService sessionService = new SessionService(application.getApplicationContext());
         apiService = ApiService.getApiInterface(application.getApplicationContext(), sessionService.getToken());
         executorService = Executors.newSingleThreadExecutor();
