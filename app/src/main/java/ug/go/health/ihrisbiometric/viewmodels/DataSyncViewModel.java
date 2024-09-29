@@ -146,37 +146,32 @@ public class DataSyncViewModel extends AndroidViewModel {
 
         syncMessageLiveData.postValue("Syncing staff records...");
         for (StaffRecord staffRecord : unsyncedStaffRecords) {
-            if (staffRecord.isFaceEnrolled() && staffRecord.isFingerprintEnrolled()) {
-                apiService.syncStaffRecord(staffRecord).enqueue(new Callback<StaffRecord>() {
-                    @Override
-                    public void onResponse(Call<StaffRecord> call, Response<StaffRecord> response) {
-                        if (response.isSuccessful()) {
-                            staffRecord.setSynced(true);
-                            dbService.updateStaffRecordAsync(staffRecord, success -> {
-                                if (success) {
-                                    updateSyncProgress();
-                                } else {
-                                    Log.e(TAG, "Failed to update staff record in local database");
-                                }
-                            });
-                        } else {
-                            Log.e(TAG, "Sync failed for staff record: " + response.message());
-                            syncStatusLiveData.postValue(SyncStatus.FAILED);
-                            syncMessageLiveData.postValue("Failed to sync staff record: " + response.message());
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<StaffRecord> call, Throwable t) {
-                        Log.e(TAG, "Failed to sync staff record", t);
+            apiService.syncStaffRecord(staffRecord).enqueue(new Callback<StaffRecord>() {
+                @Override
+                public void onResponse(Call<StaffRecord> call, Response<StaffRecord> response) {
+                    if (response.isSuccessful()) {
+                        staffRecord.setSynced(true);
+                        dbService.updateStaffRecordAsync(staffRecord, success -> {
+                            if (success) {
+                                updateSyncProgress();
+                            } else {
+                                Log.e(TAG, "Failed to update staff record in local database");
+                            }
+                        });
+                    } else {
+                        Log.e(TAG, "Sync failed for staff record: " + response.message());
                         syncStatusLiveData.postValue(SyncStatus.FAILED);
-                        syncMessageLiveData.postValue("Failed to sync staff record: " + t.getMessage());
+                        syncMessageLiveData.postValue("Failed to sync staff record: " + response.message());
                     }
-                });
-            } else {
-                Log.w(TAG, "Skipping staff record sync due to incomplete enrollment: " + staffRecord.getIhrisPid());
-                updateSyncProgress(); // Still update progress even for skipped records
-            }
+                }
+
+                @Override
+                public void onFailure(Call<StaffRecord> call, Throwable t) {
+                    Log.e(TAG, "Failed to sync staff record", t);
+                    syncStatusLiveData.postValue(SyncStatus.FAILED);
+                    syncMessageLiveData.postValue("Failed to sync staff record: " + t.getMessage());
+                }
+            });
         }
     }
 
