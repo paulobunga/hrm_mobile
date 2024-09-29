@@ -92,8 +92,6 @@ public class SettingsActivity extends AppCompatActivity implements SettingsAdapt
 
         } else if (item.getTitle().equals("Device Settings")) {
             startActivity(new Intent(SettingsActivity.this, DeviceSetupActivity.class));
-        } else if (item.getTitle().equals("Sync Data")) {
-            startActivity(new Intent(SettingsActivity.this, DataSyncActivity.class));
         } else if (item.getTitle().equals("About Project")) {
             startActivity(new Intent(SettingsActivity.this, AboutProjectActivity.class));
         } else if(item.getTitle().equals("Clear Fingerprints")) {
