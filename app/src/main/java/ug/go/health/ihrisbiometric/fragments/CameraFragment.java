@@ -392,7 +392,7 @@ public class CameraFragment extends Fragment {
                 Bitmap bitmap = Bitmap.createBitmap((int) newSize.width, (int) newSize.height, Bitmap.Config.ARGB_8888);
                 Utils.matToBitmap(resizedMat, bitmap);
                 ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 50, byteArrayOutputStream);
                 byte[] byteArray = byteArrayOutputStream.toByteArray();
                 String base64Image = Base64.encodeToString(byteArray, Base64.DEFAULT);
 
