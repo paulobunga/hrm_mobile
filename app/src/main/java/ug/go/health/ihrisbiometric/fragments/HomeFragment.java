@@ -305,7 +305,7 @@ public class HomeFragment extends Fragment {
     private void setupServices() {
         dbService = new DbService(getContext());
         sessionService = new SessionService(getContext());
-        apiService = ApiService.getApiInterface(getContext(), sessionService.getToken());
+        apiService = ApiService.getApiInterface(getContext());
     }
 
     private void setupClickListeners() {
