@@ -15,13 +15,18 @@ import ug.go.health.ihrisbiometric.R;
 import ug.go.health.ihrisbiometric.models.OutOfStationRequest;
 import ug.go.health.ihrisbiometric.models.OutOfStationResponse;
 import ug.go.health.ihrisbiometric.services.ApiService;
+import ug.go.health.ihrisbiometric.services.SessionService;
 
 public class OutOfStationActivity extends AppCompatActivity {
+
+    private SessionService sessionService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_out_of_station);
+
+        sessionService = new SessionService(this);
 
         DatePicker requestStartDate = findViewById(R.id.request_start_date);
         DatePicker requestEndDate = findViewById(R.id.request_end_date);
@@ -66,8 +71,11 @@ public class OutOfStationActivity extends AppCompatActivity {
         // Create a request object (assuming you have a model class for this)
         OutOfStationRequest request = new OutOfStationRequest(startDate, endDate, reason, comments);
 
+        // Get the token from SessionService
+        String token = sessionService.getToken();
+
         // Send the request to the server using ApiService
-        ApiService.getApiInterface(this, "your_token_here").submitOutOfStationRequest(request).enqueue(new Callback<OutOfStationResponse>() {
+        ApiService.getApiInterface(this, token).submitOutOfStationRequest(request).enqueue(new Callback<OutOfStationResponse>() {
             @Override
             public void onResponse(Call<OutOfStationResponse> call, Response<OutOfStationResponse> response) {
                 if (response.isSuccessful()) {
