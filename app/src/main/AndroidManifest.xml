@@ -36,16 +36,10 @@
             android:name=".activities.SettingsActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.NotificationsActivity"
-            android:exported="false" />
-        <activity
             android:name=".activities.DeviceSetupActivity"
             android:exported="false" />
         <activity
             android:name=".activities.OutOfStationActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activities.ClockHistoryActivity"
             android:exported="false" />
         <activity
             android:name=".activities.HomeActivity"
