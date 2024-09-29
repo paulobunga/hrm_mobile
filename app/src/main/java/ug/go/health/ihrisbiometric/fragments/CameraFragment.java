@@ -381,8 +381,15 @@ public class CameraFragment extends Fragment {
             String enrollmentStatus = faceScanner.registerFace(mRgbFrame, userId);
 
             if (enrollmentStatus.startsWith("SUCCESS")) {
-                Bitmap bitmap = Bitmap.createBitmap(mRgbFrame.cols(), mRgbFrame.rows(), Bitmap.Config.ARGB_8888);
-                Utils.matToBitmap(mRgbFrame, bitmap);
+                // Resize the Mat object to fit within 500 pixels dimensions
+                int maxDimension = Math.max(mRgbFrame.cols(), mRgbFrame.rows());
+                double scale = 500.0 / maxDimension;
+                Mat resizedMat = new Mat();
+                Size newSize = new Size(mRgbFrame.cols() * scale, mRgbFrame.rows() * scale);
+                Imgproc.resize(mRgbFrame, resizedMat, newSize);
+
+                Bitmap bitmap = Bitmap.createBitmap((int) newSize.width, (int) newSize.height, Bitmap.Config.ARGB_8888);
+                Utils.matToBitmap(resizedMat, bitmap);
                 ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
                 byte[] byteArray = byteArrayOutputStream.toByteArray();
