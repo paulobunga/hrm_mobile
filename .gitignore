@@ -28,5 +28,7 @@ local.properties
 .cxx
 
 # General
+*.aab
+*.apk
 /.externalNativeBuild
 .aider*
