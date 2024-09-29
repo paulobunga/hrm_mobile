@@ -400,6 +400,12 @@ public class CameraFragment extends Fragment {
                 byte[] byteArray = byteArrayOutputStream.toByteArray();
                 String base64Image = Base64.encodeToString(byteArray, Base64.DEFAULT);
 
+                // Get current coordinates
+                Location location = getCurrentLocation();
+                if (location != null) {
+                    selectedStaff.setLocation(new ug.go.health.ihrisbiometric.models.Location(location.getLatitude(), location.getLongitude()));
+                }
+
                 selectedStaff.setFaceEnrolled(true);
                 selectedStaff.setFaceImage(base64Image);
                 dbService.updateStaffRecordAsync(selectedStaff, success -> {
@@ -419,6 +425,20 @@ public class CameraFragment extends Fragment {
         } else {
             updateFaceStatus("Error: No staff selected for enrollment");
         }
+    }
+
+    private Location getCurrentLocation() {
+        LocationManager locationManager = (LocationManager) requireContext().getSystemService(Context.LOCATION_SERVICE);
+        if (locationManager != null) {
+            if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                try {
+                    return locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                } catch (SecurityException e) {
+                    Log.e(TAG, "Location permission denied", e);
+                }
+            }
+        }
+        return null;
     }
 
     private void clockInOut(FaceScannerResult result) {
