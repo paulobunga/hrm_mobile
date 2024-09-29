@@ -127,7 +127,14 @@ public class EnrollHistoryFragment extends Fragment {
     }
 
     private void filterEnrollStaffHistory(String query) {
-
+        dbService.getFilteredClockHistoryAsync(query, startDate, endDate, new DbService.Callback<List<ClockHistory>>() {
+            @Override
+            public void onResult(List<ClockHistory> result) {
+                enrollStaffList.clear();
+                enrollStaffList.addAll(result);
+                updateUI();
+            }
+        });
     }
 
     private void updateUI() {
