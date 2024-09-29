@@ -26,11 +26,13 @@ public class HomeViewModel extends AndroidViewModel {
 
     private final DbService dbService;
     private final SessionService sessionService;
+    private String token;
 
-    public HomeViewModel(Application application) {
+    public HomeViewModel(Application application, String token) {
         super(application);
         dbService = new DbService(application);
         sessionService = new SessionService(application);
+        token = token;
         loadStaffRecords();
         initializeScanMethod();
     }
