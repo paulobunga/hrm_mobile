@@ -68,7 +68,6 @@ public class DataSyncFragment extends Fragment {
         tvSyncMessage = view.findViewById(R.id.tvSyncMessage);
         btnSync = view.findViewById(R.id.btnSync);
         progressBar = view.findViewById(R.id.progressBar);
-        expandableListView = view.findViewById(R.id.expandableListView);
     }
 
     private void setupToolbar() {
@@ -86,7 +85,7 @@ public class DataSyncFragment extends Fragment {
             @Override
             public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
                 if (modelClass.isAssignableFrom(DataSyncViewModel.class)) {
-                    return (T) new DataSyncViewModel(requireActivity().getApplication(), token);
+                    return (T) new DataSyncViewModel(requireActivity().getApplication());
                 }
                 throw new IllegalArgumentException("Unknown ViewModel class");
             }
@@ -105,7 +104,7 @@ public class DataSyncFragment extends Fragment {
         categoryItems.put(categories.get(2), new ArrayList<ClockHistory>());
 
         syncCategoryAdapter = new SyncCategoryAdapter(requireContext(), categories, categoryItems);
-        expandableListView.setAdapter(syncCategoryAdapter);
+//        expandableListView.setAdapter(syncCategoryAdapter);
     }
 
     private void observeViewModel() {

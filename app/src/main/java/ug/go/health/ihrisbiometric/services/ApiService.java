@@ -26,7 +26,6 @@ public class ApiService {
     private static final int MAX_AGE = 60; // 1 minute
     private static final int MAX_STALE = 7 * 24 * 60 * 60; // 7 days
 
-    private static ApiInterface apiInterface;
     private static OkHttpClient okHttpClient;
     private static TokenInterceptor tokenInterceptor;
 
@@ -35,17 +34,7 @@ public class ApiService {
     }
 
     public static ApiInterface getApiInterface(Context context) {
-        if (apiInterface == null) {
-            synchronized (ApiService.class) {
-                if (apiInterface == null) {
-                    apiInterface = createApiInterface(context);
-                }
-            }
-        }
-        return apiInterface;
-    }
-
-    private static ApiInterface createApiInterface(Context context) {
+        // Always recreate Retrofit instance with updated URL
         okHttpClient = buildOkHttpClient(context);
         String baseUrl = getBaseUrl(context);
 
@@ -114,7 +103,7 @@ public class ApiService {
     private static String getBaseUrl(Context context) {
         SessionService session = new SessionService(context);
         DeviceSettings deviceSettings = session.getDeviceSettings();
-        return deviceSettings.getServerUrl();
+        return deviceSettings.getServerUrl(); // This will always fetch the latest URL
     }
 
     public static boolean isInternetAvailable(Context context) {

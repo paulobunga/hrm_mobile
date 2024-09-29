@@ -98,6 +98,10 @@ public class StaffRecord {
     @ColumnInfo(name = "face_image")
     private String faceImage;
 
+    @SerializedName("enrolled_at")
+    @Expose
+    private Long enrolled_at;
+
     public StaffRecord() {
     }
 
@@ -274,6 +278,14 @@ public class StaffRecord {
                 : "";
     }
 
+    public Long getEnrolled_at() {
+        return enrolled_at;
+    }
+
+    public void setEnrolled_at(Long enrolled_at) {
+        this.enrolled_at = enrolled_at;
+    }
+    
     @Override
     public String toString() {
         return "StaffRecord{" +
@@ -292,6 +304,8 @@ public class StaffRecord {
                 ", synced=" + synced +
                 ", templateId=" + templateId +
                 ", location=" + location +
+                ", faceImage='" + faceImage + '\'' +
+                ", enrolled_at=" + enrolled_at +
                 '}';
     }
 }

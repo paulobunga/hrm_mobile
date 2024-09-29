@@ -47,6 +47,7 @@ import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.common.util.concurrent.ListenableFuture;
 
@@ -133,6 +134,7 @@ public class CameraFragment extends Fragment {
         faceScannerResult = new FaceScannerResult();
         faceScanner.initEngine(getContext());
         dbService = new DbService(getContext());
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(getContext());
 
         // Check if the device has multiple cameras
         hasMultipleCameras = checkForMultipleCameras();
