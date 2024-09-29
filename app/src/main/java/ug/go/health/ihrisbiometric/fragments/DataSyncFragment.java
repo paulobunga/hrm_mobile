@@ -109,7 +109,8 @@ public class DataSyncFragment extends Fragment {
 
     private void observeViewModel() {
         viewModel.getSyncStatus().observe(getViewLifecycleOwner(), this::updateSyncStatus);
-        viewModel.getSyncProgress().observe(getViewLifecycleOwner(), this::updateProgressBar);
+        viewModel.getStaffSyncProgress().observe(getViewLifecycleOwner(), this::updateStaffProgressBar);
+        viewModel.getClockSyncProgress().observe(getViewLifecycleOwner(), this::updateClockProgressBar);
         viewModel.getSyncMessage().observe(getViewLifecycleOwner(), this::updateSyncMessage);
         viewModel.getSyncedStaffCount().observe(getViewLifecycleOwner(), count -> updateCountView(tvStaffSyncedCount, "Staff Synced", count));
         viewModel.getUnsyncedStaffCount().observe(getViewLifecycleOwner(), count -> updateCountView(tvStaffUnsyncedCount, "Staff Unsynced", count));
@@ -120,6 +121,14 @@ public class DataSyncFragment extends Fragment {
         viewModel.getStaffRecordsReadyForSync().observe(getViewLifecycleOwner(), this::updateStaffRecordsReadyForSync);
         viewModel.getStaffRecordsMissingInfo().observe(getViewLifecycleOwner(), this::updateStaffRecordsMissingInfo);
         viewModel.getClockHistoryReadyForSync().observe(getViewLifecycleOwner(), this::updateClockHistoryReadyForSync);
+    }
+
+    private void updateStaffProgressBar(int progress) {
+        // Update staff progress bar
+    }
+
+    private void updateClockProgressBar(int progress) {
+        // Update clock progress bar
     }
 
     private void setupSyncButton() {

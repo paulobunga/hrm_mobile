@@ -31,7 +31,10 @@ public class DataSyncViewModel extends AndroidViewModel {
     private final ExecutorService executorService;
 
     private final MutableLiveData<SyncStatus> syncStatusLiveData = new MutableLiveData<>(SyncStatus.IDLE);
-    private final MutableLiveData<Integer> syncProgressLiveData = new MutableLiveData<>(0);
+
+    private final MutableLiveData<Integer> staffSyncProgressLiveData = new MutableLiveData<>(0);
+    private final MutableLiveData<Integer> clockSyncProgressLiveData = new MutableLiveData<>(0);
+
     private final MutableLiveData<String> syncMessageLiveData = new MutableLiveData<>();
 
     private final MutableLiveData<Integer> syncedStaffCountLiveData = new MutableLiveData<>(0);
@@ -45,6 +48,9 @@ public class DataSyncViewModel extends AndroidViewModel {
 
     private final AtomicInteger totalItemsToSync = new AtomicInteger(0);
     private final AtomicInteger syncedItemsCount = new AtomicInteger(0);
+
+    private final AtomicInteger syncedStaffCount = new AtomicInteger(0);
+    private final AtomicInteger syncedClockCount = new AtomicInteger(0);
 
     private SessionService sessionService;
 
@@ -66,8 +72,12 @@ public class DataSyncViewModel extends AndroidViewModel {
         return syncStatusLiveData;
     }
 
-    public LiveData<Integer> getSyncProgress() {
-        return syncProgressLiveData;
+    public LiveData<Integer> getStaffSyncProgress() {
+        return staffSyncProgressLiveData;
+    }
+
+    public LiveData<Integer> getClockSyncProgress() {
+        return clockSyncProgressLiveData;
     }
 
     public LiveData<String> getSyncMessage() {
@@ -143,7 +153,6 @@ public class DataSyncViewModel extends AndroidViewModel {
     }
 
     private void syncStaffRecords(List<StaffRecord> unsyncedStaffRecords) {
-
         syncMessageLiveData.postValue("Syncing staff records...");
         for (StaffRecord staffRecord : unsyncedStaffRecords) {
             apiService.syncStaffRecord(staffRecord).enqueue(new Callback<StaffRecord>() {
@@ -153,7 +162,7 @@ public class DataSyncViewModel extends AndroidViewModel {
                         staffRecord.setSynced(true);
                         dbService.updateStaffRecordAsync(staffRecord, success -> {
                             if (success) {
-                                updateSyncProgress();
+                                updateStaffSyncProgress();
                             } else {
                                 Log.e(TAG, "Failed to update staff record in local database");
                             }
@@ -184,7 +193,7 @@ public class DataSyncViewModel extends AndroidViewModel {
                     if (response.isSuccessful()) {
                         clockHistory.setSynced(true);
                         dbService.updateClockHistoryAsync(clockHistory, (result) -> {
-                            updateSyncProgress();
+                            updateClockSyncProgress();
                         });
                     } else {
                         Log.e(TAG, "Sync failed for clock history: " + response.message());
@@ -203,9 +212,15 @@ public class DataSyncViewModel extends AndroidViewModel {
         }
     }
 
-    private void updateSyncProgress() {
-        int progress = (int) ((syncedItemsCount.incrementAndGet() / (float) totalItemsToSync.get()) * 100);
-        syncProgressLiveData.postValue(progress);
+    private void updateStaffSyncProgress() {
+        int progress = (int) ((syncedStaffCount.incrementAndGet() / (float) totalItemsToSync.get()) * 100);
+        staffSyncProgressLiveData.postValue(progress);
+        checkSyncCompletion();
+    }
+
+    private void updateClockSyncProgress() {
+        int progress = (int) ((syncedClockCount.incrementAndGet() / (float) totalItemsToSync.get()) * 100);
+        clockSyncProgressLiveData.postValue(progress);
         checkSyncCompletion();
     }
 
