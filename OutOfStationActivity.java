@@ -22,8 +22,23 @@ public class OutOfStationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_out_of_station);
 
-        requestStartDate = findViewById(R.id.request_start_date);
-        requestEndDate = findViewById(R.id.request_end_date);
+        DatePicker requestStartDate = findViewById(R.id.request_start_date);
+        DatePicker requestEndDate = findViewById(R.id.request_end_date);
+
+        // Example of setting a listener for date changes
+        requestStartDate.setOnDateChangedListener(new DatePicker.OnDateChangedListener() {
+            @Override
+            public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                // Handle start date change
+            }
+        });
+
+        requestEndDate.setOnDateChangedListener(new DatePicker.OnDateChangedListener() {
+            @Override
+            public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                // Handle end date change
+            }
+        });
         reason = findViewById(R.id.reason);
         comments = findViewById(R.id.comments);
         attachDocuments = findViewById(R.id.attach_documents);

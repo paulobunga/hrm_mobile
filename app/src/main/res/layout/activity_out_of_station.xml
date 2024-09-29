@@ -6,22 +6,18 @@
     android:layout_height="match_parent"
     tools:context=".activities.OutOfStationActivity">
 
-    <EditText
+    <DatePicker
         android:id="@+id/request_start_date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Request Start Date"
-        android:inputType="date"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <EditText
+    <DatePicker
         android:id="@+id/request_end_date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Request End Date"
-        android:inputType="date"
         app:layout_constraintTop_toBottomOf="@id/request_start_date"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
