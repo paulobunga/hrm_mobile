@@ -27,9 +27,6 @@
         android:theme="@style/Theme.IHRISBiometric"
         tools:targetApi="31">
         <activity
-            android:name=".activities.DataSyncActivity"
-            android:exported="false" />
-        <activity
             android:name=".activities.AboutProjectActivity"
             android:exported="false" />
         <activity
