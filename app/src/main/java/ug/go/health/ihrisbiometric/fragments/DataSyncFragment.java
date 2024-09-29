@@ -8,10 +8,12 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import ug.go.health.ihrisbiometric.services.SessionService;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.button.MaterialButton;
@@ -76,7 +78,18 @@ public class DataSyncFragment extends Fragment {
     }
 
     private void setupViewModel() {
-        viewModel = new ViewModelProvider(this).get(DataSyncViewModel.class);
+        SessionService sessionService = new SessionService(requireContext());
+        String token = sessionService.getToken();
+        viewModel = new ViewModelProvider(this, new ViewModelProvider.Factory() {
+            @NonNull
+            @Override
+            public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
+                if (modelClass.isAssignableFrom(DataSyncViewModel.class)) {
+                    return (T) new DataSyncViewModel(requireActivity().getApplication(), token);
+                }
+                throw new IllegalArgumentException("Unknown ViewModel class");
+            }
+        }).get(DataSyncViewModel.class);
     }
 
     private void initializeExpandableListView() {
