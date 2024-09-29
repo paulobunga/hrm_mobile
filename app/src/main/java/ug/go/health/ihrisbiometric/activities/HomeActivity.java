@@ -307,7 +307,7 @@ public class HomeActivity extends AppCompatActivity {
 
                     Log.d(TAG, "Empty ID incremented to " + viewModel.getEmptyId());
 
-                    updateStatus("Enrollment completed for " + staffRecord.getName());
+                    updateStatus(staffRecord.getName() + " Enrolled");
 
 
 

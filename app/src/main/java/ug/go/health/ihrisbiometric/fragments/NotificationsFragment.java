@@ -8,6 +8,7 @@ import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -42,7 +43,7 @@ public class NotificationsFragment extends Fragment {
 
         Toolbar toolbar = rootView.findViewById(R.id.notifications_toolbar);
         toolbar.setTitle("Notifications");
-        toolbar.setNavigationIcon(R.drawable.ic_back);
+        toolbar.setNavigationIcon(R.drawable.baseline_arrow_back_24);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
