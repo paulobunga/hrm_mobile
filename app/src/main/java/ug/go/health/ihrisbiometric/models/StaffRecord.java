@@ -248,7 +248,9 @@ public class StaffRecord {
 
 
     public String toJson() {
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder()
+                .excludeFieldsWithoutExposeAnnotation()
+                .create();
         return gson.toJson(this);
     }
 
