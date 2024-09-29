@@ -379,20 +379,22 @@ public class CameraFragment extends Fragment {
             String enrollmentStatus = faceScanner.registerFace(mRgbFrame, userId);
 
             if (enrollmentStatus.startsWith("SUCCESS")) {
-                String imagePath = faceScanner.saveEnrolledFaceImage(mRgbFrame, userId);
-                if (imagePath != null) {
-                    selectedStaff.setFaceEnrolled(true);
-                    selectedStaff.setFaceImagePath(imagePath);
-                    dbService.updateStaffRecordAsync(selectedStaff, success -> {
-                        if (success) {
-                            showSuccessDialog("Face Enrolled", "Staff successfully enrolled");
-                        } else {
-                            updateFaceStatus("Failed to update staff record");
-                        }
-                    });
-                } else {
-                    updateFaceStatus("Face enrollment successful, but failed to save image");
-                }
+                Bitmap bitmap = Bitmap.createBitmap(mRgbFrame.cols(), mRgbFrame.rows(), Bitmap.Config.ARGB_8888);
+                Utils.matToBitmap(mRgbFrame, bitmap);
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+                byte[] byteArray = byteArrayOutputStream.toByteArray();
+                String base64Image = Base64.encodeToString(byteArray, Base64.DEFAULT);
+
+                selectedStaff.setFaceEnrolled(true);
+                selectedStaff.setFaceImagePath(base64Image);
+                dbService.updateStaffRecordAsync(selectedStaff, success -> {
+                    if (success) {
+                        showSuccessDialog("Face Enrolled", "Staff successfully enrolled");
+                    } else {
+                        updateFaceStatus("Failed to update staff record");
+                    }
+                });
             } else {
                 updateFaceStatus(enrollmentStatus);
             }
