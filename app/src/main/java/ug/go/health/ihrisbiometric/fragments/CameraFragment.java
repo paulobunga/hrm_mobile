@@ -2,6 +2,7 @@ package ug.go.health.ihrisbiometric.fragments;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.ImageFormat;
@@ -39,11 +40,14 @@ import androidx.camera.core.resolutionselector.ResolutionSelector;
 import androidx.camera.core.resolutionselector.ResolutionStrategy;
 import androidx.camera.lifecycle.ProcessCameraProvider;
 import androidx.camera.view.PreviewView;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.common.util.concurrent.ListenableFuture;
 
 import org.opencv.android.Utils;
@@ -68,6 +72,7 @@ import ug.go.health.ihrisbiometric.models.FaceScannerResult;
 import ug.go.health.ihrisbiometric.utils.BitmapUtils;
 import ug.go.health.ihrisbiometric.utils.ImageConverter;
 import ug.go.health.ihrisbiometric.viewmodels.HomeViewModel;
+import android.Manifest;
 
 public class CameraFragment extends Fragment {
 
@@ -96,6 +101,8 @@ public class CameraFragment extends Fragment {
     private StaffRecord selectedStaff;
 
     private DbService dbService;
+
+    private FusedLocationProviderClient fusedLocationClient;
 
     private boolean isProcessing = false;
     private boolean isFragmentAttached = false;
@@ -306,6 +313,7 @@ public class CameraFragment extends Fragment {
     private final Handler debounceHandler = new Handler(Looper.getMainLooper());
     private final Runnable debounceRunnable = () -> isProcessing = false;
 
+    @OptIn(markerClass = ExperimentalGetImage.class)
     private void processImage(ImageProxy imageProxy, boolean isEnrollment) {
         if (!isFragmentAttached) {
             imageProxy.close();
@@ -430,17 +438,24 @@ public class CameraFragment extends Fragment {
     }
 
     private Location getCurrentLocation() {
-        LocationManager locationManager = (LocationManager) requireContext().getSystemService(Context.LOCATION_SERVICE);
-        if (locationManager != null) {
-            if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-                try {
-                    return locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                } catch (SecurityException e) {
-                    Log.e(TAG, "Location permission denied", e);
+        final Location[] currentLocation = {null};
+
+        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(),
+                Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return null; // Permission not granted, return null
+        }
+
+        fusedLocationClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
+            @Override
+            public void onSuccess(Location location) {
+                if(location != null) {
+                    currentLocation[0] = location;
                 }
             }
-        }
-        return null;
+        });
+
+        return currentLocation[0];
     }
 
     private void clockInOut(FaceScannerResult result) {

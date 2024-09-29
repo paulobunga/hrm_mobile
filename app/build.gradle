@@ -136,5 +136,8 @@ dependencies {
 
     implementation "net.gotev:uploadservice:4.7.0"
 
+    implementation 'io.sentry:sentry-okhttp:7.14.0'
+
+
     implementation project(':opencv')
 }

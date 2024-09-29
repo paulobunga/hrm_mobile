@@ -57,7 +57,7 @@ public interface ApiInterface {
     @POST("staff_list")
     Call<StaffRecord> syncStaffRecord(@Body StaffRecord staffRecord);
 
-    @POST("clock_history")
+    @POST("clock_user")
     Call<ClockHistory> syncClockHistory(@Body ClockHistory clockHistory);
 
 

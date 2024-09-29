@@ -59,7 +59,7 @@ public class LoginActivity extends AppCompatActivity {
 
         progressBar = findViewById(R.id.progress_bar);
 
-        apiService = ApiService.getApiInterface(this, null);
+        apiService = ApiService.getApiInterface(this);
 
         btnLogin.setOnClickListener((v) -> {
             handleLogin();

@@ -48,6 +48,12 @@ public class OutOfStationActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        // Add back button to the toolbar
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
+
         sessionService = new SessionService(this);
 
         requestStartDate = findViewById(R.id.request_start_date);

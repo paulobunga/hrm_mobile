@@ -94,7 +94,7 @@ public class HomeActivity extends AppCompatActivity {
         }).get(HomeViewModel.class);
         dbService = new DbService(this);
         sessionService = new SessionService(this);
-        apiService = ApiService.getApiInterface(this, sessionService.getToken());
+        apiService = ApiService.getApiInterface(this);
 
         grantPermissions();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

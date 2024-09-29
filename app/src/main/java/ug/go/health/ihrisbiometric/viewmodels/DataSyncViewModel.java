@@ -22,7 +22,6 @@ import ug.go.health.ihrisbiometric.services.ApiInterface;
 import ug.go.health.ihrisbiometric.services.ApiService;
 import ug.go.health.ihrisbiometric.services.DbService;
 import ug.go.health.ihrisbiometric.services.SessionService;
-import ug.go.health.ihrisbiometric.services.SessionService;
 
 public class DataSyncViewModel extends AndroidViewModel {
     private static final String TAG = "DataSyncViewModel";
@@ -56,8 +55,15 @@ public class DataSyncViewModel extends AndroidViewModel {
         this.token = token;
         dbService = new DbService(application.getApplicationContext());
         sessionService = new SessionService(application.getApplicationContext());
+
         Log.d(TAG, "DataSyncViewModel: Token Received " + token);
+
+        // Initialize ApiInterface
         apiService = ApiService.getApiInterface(application.getApplicationContext(), token);
+
+        // Set the token
+        ApiService.setToken(token);
+
         executorService = Executors.newSingleThreadExecutor();
 
         updateSyncCounts();
@@ -183,7 +189,6 @@ public class DataSyncViewModel extends AndroidViewModel {
     }
 
     private void syncClockRecords(List<ClockHistory> unsyncedClockRecords) {
-        Log.d(TAG, "syncClockRecords: Token Received " + sessionService.getToken());
         syncMessageLiveData.postValue("Syncing clock records...");
         for (ClockHistory clockHistory : unsyncedClockRecords) {
             apiService.syncClockHistory(clockHistory).enqueue(new Callback<ClockHistory>() {

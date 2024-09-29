@@ -100,7 +100,7 @@ public class NotificationsFragment extends Fragment {
         session = new SessionService(getContext());
 
         token = session.getToken();
-        apiService = ApiService.getApiInterface(getContext(), token);
+        apiService = ApiService.getApiInterface(getContext());
 
         mRecyclerView.setVisibility(View.GONE);
         emptyView.setVisibility(View.VISIBLE);
