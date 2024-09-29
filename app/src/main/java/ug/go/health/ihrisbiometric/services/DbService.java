@@ -26,13 +26,13 @@ public class DbService {
         mainHandler = new Handler(Looper.getMainLooper());
     }
 
-    public void getFilteredClockHistoryAsync(String name, Date startDate, Date endDate, Callback<List<ClockHistory>> callback) {
+    public void getFilteredStaffRecordsAsync(String name, Date startDate, Date endDate, Callback<List<StaffRecord>> callback) {
 
         Long startTimestamp = startDate != null ? startDate.getTime() : null;
         Long endTimestamp = endDate != null ? endDate.getTime() : null;
 
         executorService.execute(() -> {
-            List<ClockHistory> result = database.clockHistoryDao().getFilteredClockHistory(name, startTimestamp, endTimestamp);
+            List<StaffRecord> result = database.staffRecordDao().getFilteredStaffRecords(name, startTimestamp, endTimestamp);
             mainHandler.post(() -> callback.onResult(result));
         });
     }
