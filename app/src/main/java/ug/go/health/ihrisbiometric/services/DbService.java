@@ -28,11 +28,11 @@ public class DbService {
 
     public void getFilteredStaffRecordsAsync(String name, Date startDate, Date endDate, Callback<List<StaffRecord>> callback) {
 
-        Long startTimestamp = startDate != null ? startDate.getTime() : null;
-        Long endTimestamp = endDate != null ? endDate.getTime() : null;
+        Long startEnrolledAt = startDate != null ? startDate.getTime() : null;
+        Long endEnrolledAt = endDate != null ? endDate.getTime() : null;
 
         executorService.execute(() -> {
-            List<StaffRecord> result = database.staffRecordDao().getFilteredStaffRecords(name, startTimestamp, endTimestamp);
+            List<StaffRecord> result = database.staffRecordDao().getFilteredStaffRecords(name, startEnrolledAt, endEnrolledAt);
             mainHandler.post(() -> callback.onResult(result));
         });
     }
