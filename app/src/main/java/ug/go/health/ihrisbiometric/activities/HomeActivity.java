@@ -80,7 +80,16 @@ public class HomeActivity extends AppCompatActivity {
 
         handler = new Handler(); // Initialize the Handler instance
 
-        viewModel = new ViewModelProvider(this).get(HomeViewModel.class);
+        viewModel = new ViewModelProvider(this, new ViewModelProvider.Factory() {
+            @NonNull
+            @Override
+            public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
+                if (modelClass.isAssignableFrom(HomeViewModel.class)) {
+                    return (T) new HomeViewModel(getApplication(), sessionService.getToken());
+                }
+                throw new IllegalArgumentException("Unknown ViewModel class");
+            }
+        }).get(HomeViewModel.class);
         dbService = new DbService(this);
         sessionService = new SessionService(this);
         apiService = ApiService.getApiInterface(this, sessionService.getToken());
