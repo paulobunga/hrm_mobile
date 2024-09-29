@@ -34,7 +34,7 @@ public class ApiService {
         // Private constructor to prevent instantiation
     }
 
-    public static ApiInterface getApiInterface(Context context, String token) {
+    public static ApiInterface getApiInterface(Context context) {
         if (apiInterface == null) {
             synchronized (ApiService.class) {
                 if (apiInterface == null) {
@@ -48,6 +48,10 @@ public class ApiService {
     private static ApiInterface createApiInterface(Context context) {
         okHttpClient = buildOkHttpClient(context);
         String baseUrl = getBaseUrl(context);
+
+        SessionService sessionService = new SessionService(context);
+        String token = sessionService.getToken();
+        setToken(token);
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(baseUrl)
