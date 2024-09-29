@@ -389,7 +389,7 @@ public class CameraFragment extends Fragment {
                 String base64Image = Base64.encodeToString(byteArray, Base64.DEFAULT);
 
                 selectedStaff.setFaceEnrolled(true);
-                selectedStaff.setFaceImagePath(base64Image);
+                selectedStaff.setFaceImage(base64Image);
                 dbService.updateStaffRecordAsync(selectedStaff, success -> {
                     if (success) {
                         showSuccessDialog("Face Enrolled", "Staff successfully enrolled");
