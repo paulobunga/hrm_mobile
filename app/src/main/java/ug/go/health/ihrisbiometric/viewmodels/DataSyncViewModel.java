@@ -48,21 +48,13 @@ public class DataSyncViewModel extends AndroidViewModel {
 
     private SessionService sessionService;
 
-    private final String token;
-
-    public DataSyncViewModel(@NonNull Application application, String token) {
+    public DataSyncViewModel(@NonNull Application application) {
         super(application);
-        this.token = token;
         dbService = new DbService(application.getApplicationContext());
         sessionService = new SessionService(application.getApplicationContext());
 
-        Log.d(TAG, "DataSyncViewModel: Token Received " + token);
-
         // Initialize ApiInterface
-        apiService = ApiService.getApiInterface(application.getApplicationContext(), token);
-
-        // Set the token
-        ApiService.setToken(token);
+        apiService = ApiService.getApiInterface(application.getApplicationContext());
 
         executorService = Executors.newSingleThreadExecutor();
 
