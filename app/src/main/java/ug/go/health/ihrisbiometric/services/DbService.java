@@ -37,6 +37,16 @@ public class DbService {
         });
     }
 
+    public void getFilteredClockHistoryAsync(String query, Date startDate, Date endDate, Callback<List<ClockHistory>> callback) {
+        Long startTimestamp = startDate != null ? startDate.getTime() : null;
+        Long endTimestamp = endDate != null ? endDate.getTime() : null;
+
+        executorService.execute(() -> {
+            List<ClockHistory> result = database.clockHistoryDao().getFilteredClockHistory(query, startTimestamp, endTimestamp);
+            mainHandler.post(() -> callback.onResult(result));
+        });
+    }
+
     public interface Callback<T> {
         void onResult(T result);
     }
