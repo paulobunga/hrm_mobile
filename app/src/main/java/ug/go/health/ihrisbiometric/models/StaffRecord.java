@@ -238,12 +238,12 @@ public class StaffRecord {
         this.templateId = templateId;
     }
 
-    public String getFaceImagePath() {
-        return faceImagePath;
+    public String getFaceImage() {
+        return faceImage;
     }
 
-    public void setFaceImagePath(String faceImagePath) {
-        this.faceImagePath = faceImagePath;
+    public void setFaceImage(String faceImage) {
+        this.faceImage = faceImage;
     }
 
 
