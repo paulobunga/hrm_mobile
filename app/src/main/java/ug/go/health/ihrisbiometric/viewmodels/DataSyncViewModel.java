@@ -34,6 +34,7 @@ public class DataSyncViewModel extends AndroidViewModel {
 
     private final MutableLiveData<Integer> staffSyncProgressLiveData = new MutableLiveData<>(0);
     private final MutableLiveData<Integer> clockSyncProgressLiveData = new MutableLiveData<>(0);
+    private final MutableLiveData<Integer> syncProgressLiveData = new MutableLiveData<>(0);
 
     private final MutableLiveData<String> syncMessageLiveData = new MutableLiveData<>();
 
@@ -215,12 +216,14 @@ public class DataSyncViewModel extends AndroidViewModel {
     private void updateStaffSyncProgress() {
         int progress = (int) ((syncedStaffCount.incrementAndGet() / (float) totalItemsToSync.get()) * 100);
         staffSyncProgressLiveData.postValue(progress);
+        syncProgressLiveData.postValue(progress);
         checkSyncCompletion();
     }
 
     private void updateClockSyncProgress() {
         int progress = (int) ((syncedClockCount.incrementAndGet() / (float) totalItemsToSync.get()) * 100);
         clockSyncProgressLiveData.postValue(progress);
+        syncProgressLiveData.postValue(progress);
         checkSyncCompletion();
     }
 
