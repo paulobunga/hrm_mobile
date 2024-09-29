@@ -196,6 +196,13 @@ public class HomeFragment extends Fragment {
             navController.navigate(R.id.aboutProjectActivity);
             bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
         });
+
+        LinearLayout enrollHistoryOption = view.findViewById(R.id.enroll_history_option);
+        enrollHistoryOption.setOnClickListener(v -> {
+            NavController navController = Navigation.findNavController(requireView());
+            navController.navigate(R.id.action_homeFragment_to_enrollHistoryFragment);
+            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+        });
     }
 
     private void navigateToSyncFragment() {
