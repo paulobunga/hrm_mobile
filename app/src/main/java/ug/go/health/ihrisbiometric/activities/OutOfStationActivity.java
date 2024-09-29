@@ -22,6 +22,9 @@ import ug.go.health.ihrisbiometric.services.SessionService;
 public class OutOfStationActivity extends AppCompatActivity {
 
     private SessionService sessionService;
+    EditText requestStartDate;
+    EditText requestEndDate;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,8 +33,9 @@ public class OutOfStationActivity extends AppCompatActivity {
 
         sessionService = new SessionService(this);
 
-        EditText requestStartDate = findViewById(R.id.request_start_date);
-        EditText requestEndDate = findViewById(R.id.request_end_date);
+
+        requestStartDate = findViewById(R.id.request_start_date);
+        requestEndDate = findViewById(R.id.request_end_date);
 
         requestStartDate.setOnClickListener(new View.OnClickListener() {
             @Override
