@@ -250,6 +250,7 @@ public class HomeActivity extends AppCompatActivity {
                         clockHistory.setIhrisPID(staffRecord.getIhrisPid());
                         clockHistory.setName(staffRecord.getName());
                         clockHistory.setClockTime(new Date());
+                        clockHistory.setFacilityId(staffRecord.getFacilityId());
 
                         // Determine clock status (IN or OUT)
                         dbService.getLastClockHistoryAsync(staffRecord.getIhrisPid(), new DbService.Callback<ClockHistory>() {
@@ -267,6 +268,8 @@ public class HomeActivity extends AppCompatActivity {
                                                 lastKnownLocation.getLatitude(),
                                                 lastKnownLocation.getLongitude()
                                         ));
+                                        clockHistory.setLatitude(lastKnownLocation.getLatitude());
+                                        clockHistory.setLongitude(lastKnownLocation.getLongitude());
                                     }
                                 }
 

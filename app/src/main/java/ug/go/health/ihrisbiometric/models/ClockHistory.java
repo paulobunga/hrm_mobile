@@ -49,17 +49,35 @@ public class ClockHistory {
     @Expose
     private Location location;
 
+    @SerializedName("facility_id")
+    @Expose
+    @ColumnInfo(name = "facility_id")
+    private String facilityId;
+
+    @SerializedName("latitude")
+    @Expose
+    @ColumnInfo(name = "latitude")
+    private double latitude;
+
+    @SerializedName("longitude")
+    @Expose
+    @ColumnInfo(name = "longitude")
+    private double longitude;
+
     public ClockHistory() {
     }
 
     @Ignore
-    public ClockHistory(String ihrisPID, String name, Date clockTime, String clockStatus, boolean synced, Location location) {
+    public ClockHistory(String ihrisPID, String name, Date clockTime, String clockStatus, boolean synced, Location location, String facilityId, double latitude, double longitude) {
         this.ihrisPID = ihrisPID;
         this.name = name;
         this.clockTime = clockTime;
         this.clockStatus = clockStatus;
         this.synced = synced;
         this.location = location;
+        this.facilityId = facilityId;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     public int getId() {
@@ -118,6 +136,30 @@ public class ClockHistory {
         this.location = location;
     }
 
+    public String getFacilityId() {
+        return facilityId;
+    }
+
+    public void setFacilityId(String facilityId) {
+        this.facilityId = facilityId;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
     @Override
     public String toString() {
         return "ClockHistory{" +
@@ -128,6 +170,9 @@ public class ClockHistory {
                 ", clockStatus='" + clockStatus + '\'' +
                 ", synced=" + synced +
                 ", location=" + location +
+                ", facilityId='" + facilityId + '\'' +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
                 '}';
     }
 }
