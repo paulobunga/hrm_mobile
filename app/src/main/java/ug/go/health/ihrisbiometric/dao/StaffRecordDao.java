@@ -27,16 +27,16 @@ public interface StaffRecordDao {
     @Query("SELECT * FROM staff_records WHERE face_data IS NOT NULL")
     List<StaffRecord> getStaffRecordsWithEmbeddings();
 
-    @Query("SELECT * FROM staff_records WHERE synced = 0 AND face_enrolled = 1 AND fingerprint_enrolled = 0")
+    @Query("SELECT * FROM staff_records WHERE synced = 0")
     List<StaffRecord> getUnsyncedStaffRecords();
 
-    @Query("SELECT COUNT(*) FROM staff_records WHERE synced = 0 AND face_enrolled = 1 AND fingerprint_enrolled = 0")
+    @Query("SELECT COUNT(*) FROM staff_records WHERE synced = 0")
     int countUnsyncedStaffRecords();
 
-    @Query("SELECT * FROM staff_records WHERE synced = 0 AND face_enrolled = 1 AND fingerprint_enrolled = 1")
+    @Query("SELECT * FROM staff_records WHERE synced = 0")
     List<StaffRecord> getStaffRecordsReadyForSync();
 
-    @Query("SELECT * FROM staff_records WHERE synced = 0 AND ((face_enrolled = 1 AND fingerprint_enrolled = 0) OR (face_enrolled = 0 AND fingerprint_enrolled = 1))")
+    @Query("SELECT * FROM staff_records WHERE synced = 0")
     List<StaffRecord> getStaffRecordsMissingInfo();
 
     @Query("SELECT COUNT(*) FROM staff_records WHERE synced = 1")
