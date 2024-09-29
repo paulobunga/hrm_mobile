@@ -49,7 +49,7 @@ public class ApiService {
 
         // Create logging interceptor
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
-        //loggingInterceptor.setLevel(Level.);
+        loggingInterceptor.setLevel(Level.BODY);
 
         // Create network interceptor
         Interceptor networkInterceptor = chain -> {
@@ -93,7 +93,7 @@ public class ApiService {
             return response;
         };
 
-        loggingInterceptor.setLevel(Level.BASIC);
+        loggingInterceptor.setLevel(Level.BODY);
 
         // Create OkHttpClient with cache, network interceptors, and Sentry logging
         OkHttpClient okHttpClient = new OkHttpClient.Builder()

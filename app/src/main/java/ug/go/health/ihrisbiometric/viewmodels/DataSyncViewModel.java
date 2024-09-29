@@ -47,11 +47,14 @@ public class DataSyncViewModel extends AndroidViewModel {
     private final AtomicInteger totalItemsToSync = new AtomicInteger(0);
     private final AtomicInteger syncedItemsCount = new AtomicInteger(0);
 
+    private SessionService sessionService;
+
+
     public DataSyncViewModel(@NonNull Application application) {
         super(application);
         dbService = new DbService(application.getApplicationContext());
-        SessionService sessionService = new SessionService(application.getApplicationContext());
-        SessionService sessionService = new SessionService(application.getApplicationContext());
+        sessionService = new SessionService(application.getApplicationContext());
+        Log.d(TAG, "DataSyncViewModel: Token Received " + sessionService.getToken() );
         apiService = ApiService.getApiInterface(application.getApplicationContext(), sessionService.getToken());
         executorService = Executors.newSingleThreadExecutor();
 
@@ -140,6 +143,7 @@ public class DataSyncViewModel extends AndroidViewModel {
     }
 
     private void syncStaffRecords(List<StaffRecord> unsyncedStaffRecords) {
+
         syncMessageLiveData.postValue("Syncing staff records...");
         for (StaffRecord staffRecord : unsyncedStaffRecords) {
             if (staffRecord.isFaceEnrolled() && staffRecord.isFingerprintEnrolled()) {
@@ -177,6 +181,7 @@ public class DataSyncViewModel extends AndroidViewModel {
     }
 
     private void syncClockRecords(List<ClockHistory> unsyncedClockRecords) {
+        Log.d(TAG, "syncClockRecords: Token Received " + sessionService.getToken());
         syncMessageLiveData.postValue("Syncing clock records...");
         for (ClockHistory clockHistory : unsyncedClockRecords) {
             apiService.syncClockHistory(clockHistory).enqueue(new Callback<ClockHistory>() {
