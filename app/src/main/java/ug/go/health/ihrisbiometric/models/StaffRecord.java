@@ -92,10 +92,10 @@ public class StaffRecord {
     @Expose
     private Location location;
 
-    @SerializedName("face_image_path")
+    @SerializedName("face_image")
     @Expose
-    @ColumnInfo(name = "face_image_path")
-    private String faceImagePath;
+    @ColumnInfo(name = "face_image")
+    private String faceImage;
 
     public StaffRecord() {
     }
@@ -242,7 +242,7 @@ public class StaffRecord {
         return faceImage;
     }
 
-    public void setFaceImage(String faceImage) {
+    public void setFaceImage(String faceImag) {
         this.faceImage = faceImage;
     }
 
