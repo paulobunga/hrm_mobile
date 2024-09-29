@@ -27,6 +27,9 @@
             android:id="@+id/action_homeFragment_to_notificationsFragment"
             app:destination="@id/notificationsFragment" />
 
+        <action
+            android:id="@+id/action_homeFragment_to_enrollHistoryFragment"
+            app:destination="@id/enrollHistoryFragment" />
     </fragment>
 
     <fragment
