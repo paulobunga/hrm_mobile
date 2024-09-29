@@ -54,8 +54,9 @@ public class DataSyncViewModel extends AndroidViewModel {
         super(application);
         dbService = new DbService(application.getApplicationContext());
         sessionService = new SessionService(application.getApplicationContext());
-        Log.d(TAG, "DataSyncViewModel: Token Received " + sessionService.getToken() );
-        apiService = ApiService.getApiInterface(application.getApplicationContext(), sessionService.getToken());
+        String token = sessionService.getToken();
+        Log.d(TAG, "DataSyncViewModel: Token Received " + token);
+        apiService = ApiService.getApiInterface(application.getApplicationContext(), token);
         executorService = Executors.newSingleThreadExecutor();
 
         updateSyncCounts();

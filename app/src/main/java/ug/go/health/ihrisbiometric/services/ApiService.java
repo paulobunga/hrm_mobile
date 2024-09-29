@@ -74,6 +74,8 @@ public class ApiService {
                 request = request.newBuilder()
                         .addHeader("Authorization", "Bearer " + token)
                         .build();
+            } else {
+                Log.w(TAG, "Token is null, Authorization header not set");
             }
 
             Response response = chain.proceed(request);
