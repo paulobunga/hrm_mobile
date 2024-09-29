@@ -101,7 +101,7 @@ public class HomeFragment extends Fragment {
         setupBottomSheet(view);
 
         scanMethod = sessionService.getDeviceSettings().getScanMethod().toString();
-        deviceType = sessionService.getDeviceSettings().getDeviceType().toLowerCase();
+        deviceType = sessionService.getDeviceSettings().getDeviceType();
 
         setupScanMethodSwitch();
         changeButtonIcons();
@@ -199,7 +199,8 @@ public class HomeFragment extends Fragment {
             changeButtonIcons();
         });
 
-        if(deviceType.equals("mobile")) {
+        if(deviceType.equals("Mobile")) {
+            scanMethodSwitch.setChecked(true);
             switchHolder.setVisibility(View.GONE);
         }
     }
