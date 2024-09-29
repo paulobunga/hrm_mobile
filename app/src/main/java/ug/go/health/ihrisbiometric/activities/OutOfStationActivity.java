@@ -105,7 +105,7 @@ public class OutOfStationActivity extends AppCompatActivity {
             filePart = MultipartBody.Part.createFormData("attachment", file.getName(), requestFile);
         }
 
-        ApiService.getApiInterface(this, token).submitOutOfStationRequest(
+        ApiService.getApiInterface(this).submitOutOfStationRequest(
                 startDateBody, endDateBody, reasonBody, commentsBody, filePart
         ).enqueue(new Callback<OutOfStationResponse>() {
             @Override

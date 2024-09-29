@@ -70,7 +70,7 @@ public class NotificationsActivity extends AppCompatActivity {
         session = new SessionService(this);
 
         String token = session.getToken();
-        apiService = ApiService.getApiInterface(this, token);
+        apiService = ApiService.getApiInterface(this);
 
         mRecyclerView.setVisibility(View.GONE);
         emptyView.setVisibility(View.VISIBLE);

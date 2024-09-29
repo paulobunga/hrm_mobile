@@ -49,7 +49,7 @@ public class NotificationsFragment extends Fragment {
         session = new SessionService(getContext());
 
         String token = session.getToken();
-        apiService = ApiService.getApiInterface(getContext(), token);
+        apiService = ApiService.getApiInterface(getContext());
 
         mRecyclerView.setVisibility(View.GONE);
         if (emptyView != null) {
