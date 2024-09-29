@@ -72,4 +72,11 @@ public interface ApiInterface {
             @Part MultipartBody.Part file
     );
 
+    @Multipart
+    @POST("submit_out_of_station_request")
+    Call<OutOfStationResponse> submitOutOfStationRequest(
+            @Part("request") OutOfStationRequest request,
+            @Part MultipartBody.Part document
+    );
+
 }
