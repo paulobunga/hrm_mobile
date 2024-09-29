@@ -1,6 +1,7 @@
 package ug.go.health.ihrisbiometric.services;
 
 import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -75,7 +76,10 @@ public interface ApiInterface {
     @Multipart
     @POST("submit_out_of_station_request")
     Call<OutOfStationResponse> submitOutOfStationRequest(
-            @Part("request") OutOfStationRequest request,
+            @Part("startDate") RequestBody startDate,
+            @Part("endDate") RequestBody endDate,
+            @Part("reason") RequestBody reason,
+            @Part("comments") RequestBody comments,
             @Part MultipartBody.Part document
     );
 

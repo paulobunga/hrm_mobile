@@ -51,7 +51,7 @@ public class OutOfStationActivity extends AppCompatActivity {
         attachDocuments.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Implement document attachment logic here
+                openFilePicker();
             }
         });
 
