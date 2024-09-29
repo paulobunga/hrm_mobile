@@ -54,7 +54,7 @@
         android:textStyle="bold"
         android:textColor="@color/blue"
         android:textAllCaps="false"
-        android:gravity="center"
+        android:gravity="left"
         android:padding="8dp"
         android:background="@null"
         android:autoLink="web"
