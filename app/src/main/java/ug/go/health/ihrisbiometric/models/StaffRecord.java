@@ -285,7 +285,7 @@ public class StaffRecord {
     public void setEnrolled_at(Long enrolled_at) {
         this.enrolled_at = enrolled_at;
     }
-    
+
     @Override
     public String toString() {
         return "StaffRecord{" +
