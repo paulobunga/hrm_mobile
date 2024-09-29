@@ -80,6 +80,12 @@
             app:destination="@id/homeFragment" />
     </fragment>
 
+    <fragment
+        android:id="@+id/enrollHistoryFragment"
+        android:name="ug.go.health.ihrisbiometric.fragments.EnrollHistoryFragment"
+        android:label="Enroll History"
+        tools:layout="@layout/fragment_enroll_history" />
+
     <activity
         android:id="@+id/aboutProjectActivity"
         android:name="ug.go.health.ihrisbiometric.activities.AboutProjectActivity"
