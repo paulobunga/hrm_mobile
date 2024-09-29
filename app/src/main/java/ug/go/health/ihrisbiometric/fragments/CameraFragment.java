@@ -167,7 +167,11 @@ public class CameraFragment extends Fragment {
     private void setupUI() {
         if ("enroll".equals(actionType)) {
             enrollButton.setVisibility(View.VISIBLE);
-            enrollButton.setOnClickListener(v -> captureImage());
+            enrollButton.setOnClickListener(v -> {
+                enrollButton.setEnabled(false);
+                enrollButton.setText("Enrolling...");
+                captureImage();
+            });
             updateFaceStatus("Please position your face and click 'Enroll'");
         } else if ("clock".equals(actionType)) {
             enrollButton.setVisibility(View.GONE);
@@ -404,6 +408,10 @@ public class CameraFragment extends Fragment {
                     } else {
                         updateFaceStatus("Failed to update staff record");
                     }
+                    requireActivity().runOnUiThread(() -> {
+                        enrollButton.setEnabled(true);
+                        enrollButton.setText("Enroll Staff");
+                    });
                 });
             } else {
                 updateFaceStatus(enrollmentStatus);
