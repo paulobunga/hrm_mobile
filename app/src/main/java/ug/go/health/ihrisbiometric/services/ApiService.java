@@ -51,7 +51,9 @@ public class ApiService {
 
         SessionService sessionService = new SessionService(context);
         String token = sessionService.getToken();
-        setToken(token);
+        if (token != null && !token.isEmpty()) {
+            setToken(token);
+        }
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(baseUrl)
