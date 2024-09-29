@@ -21,6 +21,8 @@ import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import io.sentry.okhttp.SentryOkHttpInterceptor;
+import io.sentry.okhttp.SentryOkHttpEventListener;
 import okhttp3.logging.HttpLoggingInterceptor;
 import okhttp3.logging.HttpLoggingInterceptor.Level;
 import retrofit2.Retrofit;
@@ -93,11 +95,13 @@ public class ApiService {
 
         loggingInterceptor.setLevel(Level.BASIC);
 
-        // Create OkHttpClient with cache and network interceptors
+        // Create OkHttpClient with cache, network interceptors, and Sentry logging
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .cache(cache)
                 .addInterceptor(loggingInterceptor)
                 .addNetworkInterceptor(networkInterceptor)
+                .addInterceptor(new SentryOkHttpInterceptor())
+                .eventListener(new SentryOkHttpEventListener())
                 .build();
 
         // Get base url from device settings
