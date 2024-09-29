@@ -106,3 +106,23 @@ public class OutOfStationActivity extends AppCompatActivity {
         });
         newFragment.show(getSupportFragmentManager(), "datePicker");
     }
+    private void openFilePicker() {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("*/*");
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        startActivityForResult(Intent.createChooser(intent, "Select a file"), PICK_FILE_REQUEST_CODE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_FILE_REQUEST_CODE && resultCode == RESULT_OK) {
+            if (data != null) {
+                Uri fileUri = data.getData();
+                // Handle the selected file URI here
+                Toast.makeText(this, "File selected: " + fileUri.getPath(), Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    private static final int PICK_FILE_REQUEST_CODE = 1;
