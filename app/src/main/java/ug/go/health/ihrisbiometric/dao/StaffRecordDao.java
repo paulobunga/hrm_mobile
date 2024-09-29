@@ -50,4 +50,7 @@ public interface StaffRecordDao {
 
     @Query("DELETE FROM staff_records")
     void deleteAll();
+
+    @Query("SELECT * FROM staff_records WHERE ihris_pid LIKE :filter OR template_id LIKE :filter")
+    List<StaffRecord> getFilteredStaffRecords(String filter);
 }
