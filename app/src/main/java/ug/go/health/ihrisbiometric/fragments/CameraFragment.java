@@ -9,6 +9,8 @@ import android.graphics.Matrix;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraCharacteristics;
 import android.hardware.camera2.CameraManager;
+import android.location.Location;
+import android.location.LocationManager;
 import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
