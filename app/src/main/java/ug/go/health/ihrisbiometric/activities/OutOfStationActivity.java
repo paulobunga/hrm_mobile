@@ -1,17 +1,19 @@
 package ug.go.health.ihrisbiometric.activities;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import ug.go.health.ihrisbiometric.R;
+import ug.go.health.ihrisbiometric.fragments.DatePickerFragment;
 import ug.go.health.ihrisbiometric.models.OutOfStationRequest;
 import ug.go.health.ihrisbiometric.models.OutOfStationResponse;
 import ug.go.health.ihrisbiometric.services.ApiService;
@@ -28,21 +30,20 @@ public class OutOfStationActivity extends AppCompatActivity {
 
         sessionService = new SessionService(this);
 
-        DatePicker requestStartDate = findViewById(R.id.request_start_date);
-        DatePicker requestEndDate = findViewById(R.id.request_end_date);
+        EditText requestStartDate = findViewById(R.id.request_start_date);
+        EditText requestEndDate = findViewById(R.id.request_end_date);
 
-        // Example of setting a listener for date changes
-        requestStartDate.setOnDateChangedListener(new DatePicker.OnDateChangedListener() {
+        requestStartDate.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                // Handle start date change
+            public void onClick(View v) {
+                showDatePickerDialog(requestStartDate);
             }
         });
 
-        requestEndDate.setOnDateChangedListener(new DatePicker.OnDateChangedListener() {
+        requestEndDate.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                // Handle end date change
+            public void onClick(View v) {
+                showDatePickerDialog(requestEndDate);
             }
         });
 
@@ -57,13 +58,8 @@ public class OutOfStationActivity extends AppCompatActivity {
 
     private void submitOutOfStationRequest() {
         // Gather form data
-        String startDate = ((DatePicker) findViewById(R.id.request_start_date)).getYear() + "-" +
-                ((DatePicker) findViewById(R.id.request_start_date)).getMonth() + "-" +
-                ((DatePicker) findViewById(R.id.request_start_date)).getDayOfMonth();
-
-        String endDate = ((DatePicker) findViewById(R.id.request_end_date)).getYear() + "-" +
-                ((DatePicker) findViewById(R.id.request_end_date)).getMonth() + "-" +
-                ((DatePicker) findViewById(R.id.request_end_date)).getDayOfMonth();
+        String startDate = requestStartDate.getText().toString();
+        String endDate = requestEndDate.getText().toString();
 
         String reason = ((Spinner) findViewById(R.id.reason)).getSelectedItem().toString();
         String comments = ((EditText) findViewById(R.id.comments)).getText().toString();
@@ -95,3 +91,14 @@ public class OutOfStationActivity extends AppCompatActivity {
         });
     }
 }
+    private void showDatePickerDialog(final EditText editText) {
+        DatePickerFragment newFragment = new DatePickerFragment();
+        newFragment.setDateSetListener(new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(android.widget.DatePicker view, int year, int month, int dayOfMonth) {
+                String selectedDate = year + "-" + (month + 1) + "-" + dayOfMonth;
+                editText.setText(selectedDate);
+            }
+        });
+        newFragment.show(getSupportFragmentManager(), "datePicker");
+    }
