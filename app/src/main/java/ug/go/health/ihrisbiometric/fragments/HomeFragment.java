@@ -76,7 +76,17 @@ public class HomeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        viewModel = new ViewModelProvider(requireActivity()).get(HomeViewModel.class);
+        viewModel = new ViewModelProvider(requireActivity(), new ViewModelProvider.Factory() {
+            @NonNull
+            @Override
+            public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
+                if (modelClass.isAssignableFrom(HomeViewModel.class)) {
+                    SessionService sessionService = new SessionService(requireContext());
+                    return (T) new HomeViewModel(requireActivity().getApplication(), sessionService.getToken());
+                }
+                throw new IllegalArgumentException("Unknown ViewModel class");
+            }
+        }).get(HomeViewModel.class);
     }
 
     @Override
