@@ -107,4 +107,7 @@ public class SessionService {
         return getCurrentUser() != null;
     }
 
+    public List<String> getReasonList() {
+        return new ArrayList<>();
+    }
 }

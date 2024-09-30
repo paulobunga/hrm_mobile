@@ -12,6 +12,7 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import ug.go.health.ihrisbiometric.services.SessionService;
@@ -116,6 +117,18 @@ public class DataSyncFragment extends Fragment {
         viewModel.getUnsyncedStaffCount().observe(getViewLifecycleOwner(), count -> updateCountView(tvStaffUnsyncedCount, "Staff Unsynced", count));
         viewModel.getSyncedClockCount().observe(getViewLifecycleOwner(), count -> updateCountView(tvClockSyncedCount, "Clock Records Synced", count));
         viewModel.getUnsyncedClockCount().observe(getViewLifecycleOwner(), count -> updateCountView(tvClockUnsyncedCount, "Clock Records Unsynced", count));
+        viewModel.getClockSyncProgress().observe(getViewLifecycleOwner(), new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                // Update Clock Progress Bar
+            }
+        });
+        viewModel.getStaffSyncProgress().observe(getViewLifecycleOwner(), new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                // Update Staff Progress Bar
+            }
+        });
 
         // Observe lists for expandable list view
         viewModel.getStaffRecordsReadyForSync().observe(getViewLifecycleOwner(), this::updateStaffRecordsReadyForSync);
@@ -124,11 +137,11 @@ public class DataSyncFragment extends Fragment {
     }
 
     private void updateStaffProgressBar(int progress) {
-        // Update staff progress bar
+        progressBar.setProgress(progress);
     }
 
     private void updateClockProgressBar(int progress) {
-        // Update clock progress bar
+        progressBar.setProgress(progress);
     }
 
     private void setupSyncButton() {

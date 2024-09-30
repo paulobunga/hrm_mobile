@@ -11,6 +11,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
 import android.os.SystemClock;
+import android.util.Log;
 import android.widget.TextView;
 
 import ug.go.health.ihrisbiometric.ScannerEventListener;
@@ -417,6 +418,8 @@ public class ScannerLibrary {
 
 	public int Run_CmdWriteTemplate(int p_nTmpNo)
 	{
+		Log.d("YISSH", "Run_CmdWriteTemplate: Writing template file...");
+
 		boolean		w_blRet = false;
 		int			w_nTemplateNo = 0;
 		int			i, n, r;

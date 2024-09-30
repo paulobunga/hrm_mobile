@@ -1,5 +1,6 @@
 package ug.go.health.ihrisbiometric.activities;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.database.Cursor;
@@ -7,6 +8,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.OpenableColumns;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -19,6 +22,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.List;
+
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -39,6 +44,7 @@ public class OutOfStationActivity extends AppCompatActivity {
     private EditText requestEndDate;
     private TextView selectedFileNameTextView;
     private Uri selectedFileUri;
+    private Spinner reasonSpinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +65,10 @@ public class OutOfStationActivity extends AppCompatActivity {
         requestStartDate = findViewById(R.id.request_start_date);
         requestEndDate = findViewById(R.id.request_end_date);
         selectedFileNameTextView = findViewById(R.id.selected_file_name);
+        reasonSpinner = findViewById(R.id.reason);
+
+        // Populate the spinner
+        populateReasonSpinner();
 
         requestStartDate.setOnClickListener(v -> showDatePickerDialog(requestStartDate));
         requestEndDate.setOnClickListener(v -> showDatePickerDialog(requestEndDate));
@@ -70,11 +80,32 @@ public class OutOfStationActivity extends AppCompatActivity {
         selectFileButton.setOnClickListener(v -> openFilePicker());
     }
 
+    private void populateReasonSpinner() {
+        List<String> reasons = sessionService.getReasonList(); // Fetch reasons from session service
+        if (reasons != null && !reasons.isEmpty()) {
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, reasons);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            reasonSpinner.setAdapter(adapter);
+        } else {
+            Toast.makeText(this, "No reasons available", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     private void submitOutOfStationRequest() {
-        String startDate = requestStartDate.getText().toString();
-        String endDate = requestEndDate.getText().toString();
-        String reason = ((Spinner) findViewById(R.id.reason)).getSelectedItem().toString();
-        String comments = ((EditText) findViewById(R.id.comments)).getText().toString();
+        // Fetch start date, end date, and comments safely
+        String startDate = requestStartDate.getText() != null ? requestStartDate.getText().toString() : "";
+        String endDate = requestEndDate.getText() != null ? requestEndDate.getText().toString() : "";
+        EditText commentsField = findViewById(R.id.comments);
+        String comments = commentsField != null && commentsField.getText() != null ? commentsField.getText().toString() : "";
+
+        // Fetch reason safely
+        String reason = (reasonSpinner != null && reasonSpinner.getSelectedItem() != null) ? reasonSpinner.getSelectedItem().toString() : "";
+
+        // Ensure none of the fields are empty (basic validation)
+        if (startDate.isEmpty() || endDate.isEmpty() || reason.isEmpty()) {
+            Toast.makeText(OutOfStationActivity.this, "Please fill in all required fields", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         String token = sessionService.getToken();
 
@@ -105,6 +136,7 @@ public class OutOfStationActivity extends AppCompatActivity {
             filePart = MultipartBody.Part.createFormData("attachment", file.getName(), requestFile);
         }
 
+        // Submit the request via API
         ApiService.getApiInterface(this).submitOutOfStationRequest(
                 startDateBody, endDateBody, reasonBody, commentsBody, filePart
         ).enqueue(new Callback<OutOfStationResponse>() {
@@ -152,6 +184,7 @@ public class OutOfStationActivity extends AppCompatActivity {
         }
     }
 
+    @SuppressLint("Range")
     private String getFileName(Uri uri) {
         String result = null;
         if (uri.getScheme().equals("content")) {

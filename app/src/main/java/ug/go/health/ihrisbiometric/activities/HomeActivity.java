@@ -4,20 +4,16 @@ import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
-import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
-import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
@@ -28,6 +24,14 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.work.ExistingPeriodicWorkPolicy;
 import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
+
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -75,6 +79,9 @@ public class HomeActivity extends AppCompatActivity {
     private static final long DEBOUNCE_DELAY = 2000; // 2 seconds
     private long lastClockTime = 0;
 
+    private FusedLocationProviderClient fusedLocationClient;
+    private LocationCallback locationCallback;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -113,6 +120,21 @@ public class HomeActivity extends AppCompatActivity {
         uploadWorkRequest = new PeriodicWorkRequest.Builder(StaffPictureUploadService.class, 1, TimeUnit.HOURS)
                 .build();
         WorkManager.getInstance(this).enqueueUniquePeriodicWork("StaffPictureUploadWork", ExistingPeriodicWorkPolicy.REPLACE, uploadWorkRequest);
+
+        // Initialize Fused Location Provider Client
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        locationCallback = new LocationCallback() {
+            @Override
+            public void onLocationResult(LocationResult locationResult) {
+                if (locationResult == null) {
+                    return;
+                }
+                for (Location location : locationResult.getLocations()) {
+                    // Update your location here
+                    updateLocation(location);
+                }
+            }
+        };
     }
 
     private void observeViewModel() {
@@ -177,8 +199,10 @@ public class HomeActivity extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void handleScannerEvent(String event) {
+
+
         String cleanedEvent = event.replaceAll("\\s+", " ").replaceAll("(\r\n|\n)", " ").trim();
-        Log.d(TAG, cleanedEvent);
+        Log.d(TAG, "CLEANED_EVENT " + cleanedEvent);
 
         if (event.contains("EMPTY_ID")) {
             handleEmptyIdEvent(event);
@@ -260,30 +284,33 @@ public class HomeActivity extends AppCompatActivity {
                                 clockHistory.setClockStatus(clockStatus);
 
                                 // Get current location
-                                LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
                                 if (ActivityCompat.checkSelfPermission(HomeActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                                    Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                                    if (lastKnownLocation != null) {
-                                        clockHistory.setLocation(new ug.go.health.ihrisbiometric.models.Location(
-                                                lastKnownLocation.getLatitude(),
-                                                lastKnownLocation.getLongitude()
-                                        ));
-                                        clockHistory.setLatitude(lastKnownLocation.getLatitude());
-                                        clockHistory.setLongitude(lastKnownLocation.getLongitude());
-                                    }
-                                }
+                                    fusedLocationClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
+                                        @Override
+                                        public void onSuccess(Location location) {
+                                            if (location != null) {
+                                                clockHistory.setLocation(new ug.go.health.ihrisbiometric.models.Location(
+                                                        location.getLatitude(),
+                                                        location.getLongitude()
+                                                ));
+                                                clockHistory.setLatitude(location.getLatitude());
+                                                clockHistory.setLongitude(location.getLongitude());
+                                            }
 
-                                // Save clock history
-                                dbService.saveClockHistoryAsync(clockHistory, new DbService.Callback<Boolean>() {
-                                    @Override
-                                    public void onResult(Boolean result) {
-                                        if(result) {
-                                            updateStatus(staffRecord.getName() + " CLOCKED " + clockStatus);
-                                        } else {
-                                            updateStatus("Failed to clock " + staffRecord.getName());
+                                            // Save clock history
+                                            dbService.saveClockHistoryAsync(clockHistory, new DbService.Callback<Boolean>() {
+                                                @Override
+                                                public void onResult(Boolean result) {
+                                                    if(result) {
+                                                        updateStatus(staffRecord.getName() + " CLOCKED " + clockStatus);
+                                                    } else {
+                                                        updateStatus("Failed to clock " + staffRecord.getName());
+                                                    }
+                                                }
+                                            });
                                         }
-                                    }
-                                });
+                                    });
+                                }
                             }
                         });
                     } else {
@@ -302,26 +329,55 @@ public class HomeActivity extends AppCompatActivity {
             staffRecord.setFingerprintEnrolled(true);
             staffRecord.setTemplateId(templateNumber);
 
-            dbService.updateStaffRecordAsync(staffRecord, result -> {
-                if (result) {
-                    Log.d(TAG, "Staff record updated successfully");
+            // Fetch the current location and update the staff record
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                fusedLocationClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(Location location) {
+                        if (location != null) {
 
-                    viewModel.incrementEmptyId();
+                            staffRecord.setLocation(new ug.go.health.ihrisbiometric.models.Location(
+                                    location.getLatitude(),
+                                    location.getLongitude()
+                            ));
 
-                    Log.d(TAG, "Empty ID incremented to " + viewModel.getEmptyId());
+//                            staffRecord.setLatitude(location.getLatitude());
+//                            staffRecord.setLongitude(location.getLongitude());
+                        }
 
-                    updateStatus(staffRecord.getName() + " Enrolled");
+                        // Save the updated staff record
+                        dbService.updateStaffRecordAsync(staffRecord, result -> {
+                            if (result) {
+                                Log.d(TAG, "Staff record updated successfully");
 
 
+                                Log.d(TAG, "Empty ID incremented to " + viewModel.getEmptyId());
 
-                } else {
-                    Log.e(TAG, "Failed to update staff record");
-                    updateStatus("Failed to update staff record for " + staffRecord.getName());
-                }
-            });
+                                updateStatus(staffRecord.getName() + " Enrolled");
 
-            // The actual template data will be handled in handleTemplateSaved method
-            updateStatus("Fingerprint enrolled. Waiting for template to be saved...");
+                                scanner.Run_CmdReadTemplate(templateNumber);
+
+                                viewModel.incrementEmptyId();
+
+
+                            } else {
+                                Log.e(TAG, "Failed to update staff record");
+                                updateStatus("Failed to update staff record for " + staffRecord.getName());
+                            }
+                        });
+
+//                        updateStatus("Fingerprint enrolled. Waiting for template to be saved...");
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e(TAG, "Failed to get location", e);
+                        updateStatus("Failed to get location for enrollment");
+                    }
+                });
+            } else {
+                updateStatus("Location permission not granted");
+            }
         } else {
             updateStatus("No staff selected for enrollment");
         }
@@ -389,11 +445,11 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
-
     private void grantPermissions() {
         String[] permissions = {
                 Manifest.permission.CAMERA,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_EXTERNAL_STORAGE,
                 Manifest.permission.ACCESS_FINE_LOCATION,
                 Manifest.permission.ACCESS_COARSE_LOCATION
         };
@@ -421,6 +477,39 @@ public class HomeActivity extends AppCompatActivity {
         super.onResume();
         if ("Scanner".equals(sessionService.getDeviceSettings().getDeviceType())) {
             PowerControl(1);
+        }
+        startLocationUpdates();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        stopLocationUpdates();
+    }
+
+    private void startLocationUpdates() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        fusedLocationClient.requestLocationUpdates(createLocationRequest(), locationCallback, null);
+    }
+
+    private void stopLocationUpdates() {
+        fusedLocationClient.removeLocationUpdates(locationCallback);
+    }
+
+    private LocationRequest createLocationRequest() {
+        LocationRequest locationRequest = LocationRequest.create();
+        locationRequest.setInterval(10000);
+        locationRequest.setFastestInterval(5000);
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        return locationRequest;
+    }
+
+    private void updateLocation(Location location) {
+        if (location != null) {
+            Log.d(TAG, "Latitude: " + location.getLatitude() + ", Longitude: " + location.getLongitude());
+            // Update your UI or save the location as needed
         }
     }
 
@@ -497,7 +586,6 @@ public class HomeActivity extends AppCompatActivity {
         Toast.makeText(HomeActivity.this, "Staff records updated", Toast.LENGTH_SHORT).show();
         viewModel.refreshStaffRecords();
     }
-
 
     @Override
     protected void onDestroy() {
