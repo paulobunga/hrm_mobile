@@ -133,7 +133,9 @@ public class DataSyncViewModel extends AndroidViewModel {
 
     private void performSync() {
         try {
-            syncMessageLiveData.postValue("Fetching unsynced records...");
+            List<String> messages = syncMessagesLiveData.getValue();
+            messages.add("Fetching unsynced records...");
+            syncMessagesLiveData.setValue(messages);
 
             dbService.getUnsyncedStaffRecordsAsync(this::handleUnsyncedStaffRecords);
         } catch (Exception e) {
@@ -159,7 +161,9 @@ public class DataSyncViewModel extends AndroidViewModel {
     }
 
     private void syncStaffRecords(List<StaffRecord> unsyncedStaffRecords) {
-        syncMessageLiveData.postValue("Syncing staff records...");
+        List<String> messages = syncMessagesLiveData.getValue();
+        messages.add("Syncing staff records...");
+        syncMessagesLiveData.setValue(messages);
         for (StaffRecord staffRecord : unsyncedStaffRecords) {
             apiService.syncStaffRecord(staffRecord).enqueue(new Callback<StaffRecord>() {
                 @Override
@@ -204,7 +208,9 @@ public class DataSyncViewModel extends AndroidViewModel {
     }
 
     private void syncClockRecords(List<ClockHistory> unsyncedClockRecords) {
-        syncMessageLiveData.postValue("Syncing clock records...");
+        List<String> messages = syncMessagesLiveData.getValue();
+        messages.add("Syncing clock records...");
+        syncMessagesLiveData.setValue(messages);
         for (ClockHistory clockHistory : unsyncedClockRecords) {
             apiService.syncClockHistory(clockHistory).enqueue(new Callback<ClockHistory>() {
                 @Override
