@@ -174,7 +174,7 @@ public class DataSyncFragment extends Fragment {
                 btnSync.setEnabled(true);
                 staffProgressBar.setVisibility(View.GONE);
                 clockProgressBar.setVisibility(View.GONE);
-                String errorMessage = viewModel.getSyncMessage().getValue();
+                String errorMessage = viewModel.getSyncMessages().getValue().get(viewModel.getSyncMessages().getValue().size() - 1);
                 Toast.makeText(requireContext(), "Sync failed: " + errorMessage, Toast.LENGTH_SHORT).show();
                 break;
         }
