@@ -168,18 +168,17 @@ public class DataSyncFragment extends Fragment {
                 btnSync.setEnabled(true);
                 staffProgressBar.setVisibility(View.GONE);
                 clockProgressBar.setVisibility(View.GONE);
-                Toast.makeText(requireContext(), "Sync completed", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(requireContext(), "Sync completed", Toast.LENGTH_SHORT).show();
                 break;
             case FAILED:
                 btnSync.setEnabled(true);
                 staffProgressBar.setVisibility(View.GONE);
                 clockProgressBar.setVisibility(View.GONE);
                 String errorMessage = viewModel.getSyncMessages().getValue().get(viewModel.getSyncMessages().getValue().size() - 1);
-                Toast.makeText(requireContext(), "Sync failed: " + errorMessage, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(requireContext(), "Sync failed: " + errorMessage, Toast.LENGTH_SHORT).show();
                 break;
         }
     }
-
 
     private void updateSyncMessages(List<String> messages) {
         requireActivity().runOnUiThread(() -> {
