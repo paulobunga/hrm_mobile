@@ -154,28 +154,29 @@ public class DataSyncFragment extends Fragment {
         switch (status) {
             case IDLE:
                 btnSync.setEnabled(true);
-                progressBar.setVisibility(View.GONE);
+                staffProgressBar.setVisibility(View.GONE);
+                clockProgressBar.setVisibility(View.GONE);
                 break;
             case IN_PROGRESS:
                 btnSync.setEnabled(false);
-                progressBar.setVisibility(View.VISIBLE);
+                staffProgressBar.setVisibility(View.VISIBLE);
+                clockProgressBar.setVisibility(View.VISIBLE);
                 break;
             case COMPLETED:
                 btnSync.setEnabled(true);
-                progressBar.setVisibility(View.GONE);
+                staffProgressBar.setVisibility(View.GONE);
+                clockProgressBar.setVisibility(View.GONE);
                 Toast.makeText(requireContext(), "Sync completed", Toast.LENGTH_SHORT).show();
                 break;
             case FAILED:
                 btnSync.setEnabled(true);
-                progressBar.setVisibility(View.GONE);
+                staffProgressBar.setVisibility(View.GONE);
+                clockProgressBar.setVisibility(View.GONE);
                 Toast.makeText(requireContext(), "Sync failed", Toast.LENGTH_SHORT).show();
                 break;
         }
     }
 
-    private void updateProgressBar(int progress) {
-        progressBar.setProgress(progress);
-    }
 
     private void updateSyncMessage(String message) {
         tvSyncMessage.setText(message);
