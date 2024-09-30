@@ -38,7 +38,7 @@ public class DataSyncViewModel extends AndroidViewModel {
     private final MutableLiveData<Integer> clockSyncProgressLiveData = new MutableLiveData<>(0);
     private final MutableLiveData<Integer> syncProgressLiveData = new MutableLiveData<>(0);
 
-    private final MutableLiveData<String> syncMessageLiveData = new MutableLiveData<>();
+    private final MutableLiveData<List<String>> syncMessagesLiveData = new MutableLiveData<>(new ArrayList<>());
 
     private final MutableLiveData<Integer> syncedStaffCountLiveData = new MutableLiveData<>(0);
     private final MutableLiveData<Integer> unsyncedStaffCountLiveData = new MutableLiveData<>(0);
@@ -83,8 +83,8 @@ public class DataSyncViewModel extends AndroidViewModel {
         return clockSyncProgressLiveData;
     }
 
-    public LiveData<String> getSyncMessage() {
-        return syncMessageLiveData;
+    public LiveData<List<String>> getSyncMessages() {
+        return syncMessagesLiveData;
     }
 
     public LiveData<Integer> getSyncedStaffCount() {
@@ -182,7 +182,9 @@ public class DataSyncViewModel extends AndroidViewModel {
                         }
                         Log.e(TAG, errorMessage);
                         syncStatusLiveData.postValue(SyncStatus.FAILED);
-                        syncMessageLiveData.postValue(errorMessage);
+                        List<String> messages = syncMessagesLiveData.getValue();
+                        messages.add(errorMessage);
+                        syncMessagesLiveData.postValue(messages);
                     }
                 }
 
@@ -190,7 +192,9 @@ public class DataSyncViewModel extends AndroidViewModel {
                 public void onFailure(Call<StaffRecord> call, Throwable t) {
                     Log.e(TAG, "Failed to sync staff record", t);
                     syncStatusLiveData.postValue(SyncStatus.FAILED);
-                    syncMessageLiveData.postValue("Failed to sync staff record: " + t.getMessage());
+                    List<String> messages = syncMessagesLiveData.getValue();
+                    messages.add("Failed to sync staff record: " + t.getMessage());
+                    syncMessagesLiveData.postValue(messages);
                 }
             });
         }
@@ -219,7 +223,9 @@ public class DataSyncViewModel extends AndroidViewModel {
                         }
                         Log.e(TAG, errorMessage);
                         syncStatusLiveData.postValue(SyncStatus.FAILED);
-                        syncMessageLiveData.postValue(errorMessage);
+                        List<String> messages = syncMessagesLiveData.getValue();
+                        messages.add(errorMessage);
+                        syncMessagesLiveData.postValue(messages);
                     }
                 }
 
@@ -227,7 +233,9 @@ public class DataSyncViewModel extends AndroidViewModel {
                 public void onFailure(Call<ClockHistory> call, Throwable t) {
                     Log.e(TAG, "Failed to sync clock history", t);
                     syncStatusLiveData.postValue(SyncStatus.FAILED);
-                    syncMessageLiveData.postValue("Failed to sync clock record: " + t.getMessage());
+                    List<String> messages = syncMessagesLiveData.getValue();
+                    messages.add("Failed to sync clock record: " + t.getMessage());
+                    syncMessagesLiveData.postValue(messages);
                 }
             });
         }

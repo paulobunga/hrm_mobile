@@ -156,6 +156,13 @@
                 android:layout_marginBottom="16dp"
                 android:visibility="visible"/>
 
+            <!-- Sync Messages ListView -->
+            <ListView
+                android:id="@+id/syncMessagesListView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"/>
+
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>

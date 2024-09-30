@@ -114,7 +114,7 @@ public class DataSyncFragment extends Fragment {
         viewModel.getSyncStatus().observe(getViewLifecycleOwner(), this::updateSyncStatus);
         viewModel.getStaffSyncProgress().observe(getViewLifecycleOwner(), this::updateStaffProgressBar);
         viewModel.getClockSyncProgress().observe(getViewLifecycleOwner(), this::updateClockProgressBar);
-        viewModel.getSyncMessage().observe(getViewLifecycleOwner(), this::updateSyncMessage);
+        viewModel.getSyncMessages().observe(getViewLifecycleOwner(), this::updateSyncMessages);
         viewModel.getSyncedStaffCount().observe(getViewLifecycleOwner(), count -> updateCountView(tvStaffSyncedCount, "Staff Synced", count));
         viewModel.getUnsyncedStaffCount().observe(getViewLifecycleOwner(), count -> updateCountView(tvStaffUnsyncedCount, "Staff Unsynced", count));
         viewModel.getSyncedClockCount().observe(getViewLifecycleOwner(), count -> updateCountView(tvClockSyncedCount, "Clock Records Synced", count));
@@ -179,8 +179,10 @@ public class DataSyncFragment extends Fragment {
     }
 
 
-    private void updateSyncMessage(String message) {
-        tvSyncMessage.setText(message);
+    private void updateSyncMessages(List<String> messages) {
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_list_item_1, messages);
+        ListView syncMessagesListView = requireView().findViewById(R.id.syncMessagesListView);
+        syncMessagesListView.setAdapter(adapter);
     }
 
     private void updateCountView(TextView textView, String label, int count) {
