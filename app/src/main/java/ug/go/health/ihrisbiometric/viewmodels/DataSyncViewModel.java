@@ -169,9 +169,18 @@ public class DataSyncViewModel extends AndroidViewModel {
                             }
                         });
                     } else {
-                        Log.e(TAG, "Sync failed for staff record: " + response.message());
+                        String errorMessage = "Sync failed for staff record";
+                        if (response.errorBody() != null) {
+                            try {
+                                JSONObject errorObject = new JSONObject(response.errorBody().string());
+                                errorMessage = errorObject.getString("message");
+                            } catch (Exception e) {
+                                Log.e(TAG, "Error parsing error response", e);
+                            }
+                        }
+                        Log.e(TAG, errorMessage);
                         syncStatusLiveData.postValue(SyncStatus.FAILED);
-                        syncMessageLiveData.postValue("Failed to sync staff record: " + response.message());
+                        syncMessageLiveData.postValue(errorMessage);
                     }
                 }
 
@@ -197,9 +206,18 @@ public class DataSyncViewModel extends AndroidViewModel {
                             updateClockSyncProgress();
                         });
                     } else {
-                        Log.e(TAG, "Sync failed for clock history: " + response.message());
+                        String errorMessage = "Sync failed for clock history";
+                        if (response.errorBody() != null) {
+                            try {
+                                JSONObject errorObject = new JSONObject(response.errorBody().string());
+                                errorMessage = errorObject.getString("message");
+                            } catch (Exception e) {
+                                Log.e(TAG, "Error parsing error response", e);
+                            }
+                        }
+                        Log.e(TAG, errorMessage);
                         syncStatusLiveData.postValue(SyncStatus.FAILED);
-                        syncMessageLiveData.postValue("Failed to sync clock record: " + response.message());
+                        syncMessageLiveData.postValue(errorMessage);
                     }
                 }
 
