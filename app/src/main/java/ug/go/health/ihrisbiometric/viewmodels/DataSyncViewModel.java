@@ -160,7 +160,7 @@ public class DataSyncViewModel extends AndroidViewModel {
                 @Override
                 public void onResponse(Call<StaffRecord> call, Response<StaffRecord> response) {
                     if (response.isSuccessful()) {
-                        staffRecord.setSynced(true);
+                        staffRecord.setSynced(false);
                         dbService.updateStaffRecordAsync(staffRecord, success -> {
                             if (success) {
                                 updateStaffSyncProgress();
