@@ -135,7 +135,7 @@ public class DataSyncViewModel extends AndroidViewModel {
         try {
             List<String> messages = syncMessagesLiveData.getValue();
             messages.add("Fetching unsynced records...");
-            syncMessagesLiveData.setValue(messages);
+            syncMessagesLiveData.postValue(messages);
 
             dbService.getUnsyncedStaffRecordsAsync(this::handleUnsyncedStaffRecords);
         } catch (Exception e) {
@@ -143,7 +143,7 @@ public class DataSyncViewModel extends AndroidViewModel {
             syncStatusLiveData.postValue(SyncStatus.FAILED);
             List<String> messages = syncMessagesLiveData.getValue();
             messages.add("Sync failed: " + e.getMessage());
-            syncMessagesLiveData.setValue(messages);
+            syncMessagesLiveData.postValue(messages);
         }
     }
 
