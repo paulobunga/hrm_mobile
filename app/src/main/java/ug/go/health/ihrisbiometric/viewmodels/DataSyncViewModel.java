@@ -153,7 +153,9 @@ public class DataSyncViewModel extends AndroidViewModel {
 
             if (totalItemsToSync.get() == 0) {
                 syncStatusLiveData.postValue(SyncStatus.COMPLETED);
-                syncMessageLiveData.postValue("No records to sync");
+                List<String> messages = syncMessagesLiveData.getValue();
+                messages.add("No records to sync");
+                syncMessagesLiveData.setValue(messages);
                 return;
             }
 
