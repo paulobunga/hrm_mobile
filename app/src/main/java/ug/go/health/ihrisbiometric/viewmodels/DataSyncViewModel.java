@@ -126,7 +126,7 @@ public class DataSyncViewModel extends AndroidViewModel {
         syncProgressLiveData.setValue(0);
         List<String> messages = syncMessagesLiveData.getValue();
         messages.add("Starting sync...");
-        syncMessagesLiveData.setValue(messages);
+        syncMessagesLiveData.postValue(messages);
 
         executorService.execute(this::performSync);
     }

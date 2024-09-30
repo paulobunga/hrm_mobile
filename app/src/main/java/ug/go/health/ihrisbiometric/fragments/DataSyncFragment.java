@@ -182,9 +182,12 @@ public class DataSyncFragment extends Fragment {
 
 
     private void updateSyncMessages(List<String> messages) {
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_list_item_1, messages);
-        ListView syncMessagesListView = requireView().findViewById(R.id.syncMessagesListView);
-        syncMessagesListView.setAdapter(adapter);
+        requireActivity().runOnUiThread(() -> {
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_list_item_1, messages);
+            ListView syncMessagesListView = requireView().findViewById(R.id.syncMessagesListView);
+            syncMessagesListView.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
+        });
     }
 
     private void updateCountView(TextView textView, String label, int count) {
