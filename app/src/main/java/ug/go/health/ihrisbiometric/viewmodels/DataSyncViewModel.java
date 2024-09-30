@@ -271,7 +271,9 @@ public class DataSyncViewModel extends AndroidViewModel {
     private void checkSyncCompletion() {
         if (syncedItemsCount.get() == totalItemsToSync.get()) {
             syncStatusLiveData.postValue(SyncStatus.COMPLETED);
-            syncMessageLiveData.postValue("Sync completed successfully");
+            List<String> messages = syncMessagesLiveData.getValue();
+            messages.add("Sync completed successfully");
+            syncMessagesLiveData.postValue(messages);
             updateSyncCounts();
             updateSyncCategories();
         }
