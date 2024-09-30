@@ -140,7 +140,16 @@
 
             <!-- Progress Bar -->
             <ProgressBar
-                android:id="@+id/progressBar"
+                android:id="@+id/enrollProgressBar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:visibility="visible"/>
+
+            <!-- Progress Bar -->
+            <ProgressBar
+                android:id="@+id/clockProgressBar"
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
