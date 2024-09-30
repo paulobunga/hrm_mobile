@@ -41,10 +41,6 @@ public interface ApiInterface {
     @POST("login")
     Call<LoginResponse> login(@Body LoginRequest request);
 
-    // Download staff image
-    @GET("staff/{facility_id}/images")
-    Call<ResponseBody> downloadStaffImages(@Path("facility_id") int id);
-
     // Get Staff List by FacilityName using retrofit
     @GET("staff_list")
     Call<StaffListResponse> getStaffListByFacilityName(@Query("facility_name") String facilityName);
@@ -54,7 +50,7 @@ public interface ApiInterface {
     Call<FacilityListResponse> getFacilities();
 
     // Sync Staff Record to remote database
-    @POST("staff_list")
+    @POST("enroll_user")
     Call<StaffRecord> syncStaffRecord(@Body StaffRecord staffRecord);
 
     @POST("clock_user")
@@ -62,19 +58,7 @@ public interface ApiInterface {
 
 
     @Multipart
-    @POST("upload_face")
-    Call<FaceUploadResponse> uploadFace(
-            @Part MultipartBody.Part file
-    );
-
-    @Multipart
-    @POST("upload_fingerprint")
-    Call<FingerprintUploadResponse> uploadFingerprint(
-            @Part MultipartBody.Part file
-    );
-
-    @Multipart
-    @POST("submit_out_of_station_request")
+    @POST("request")
     Call<OutOfStationResponse> submitOutOfStationRequest(
             @Part("startDate") RequestBody startDate,
             @Part("endDate") RequestBody endDate,

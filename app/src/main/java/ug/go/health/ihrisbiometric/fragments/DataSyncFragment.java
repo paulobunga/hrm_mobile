@@ -117,10 +117,10 @@ public class DataSyncFragment extends Fragment {
         viewModel.getStaffSyncProgress().observe(getViewLifecycleOwner(), this::updateStaffProgressBar);
         viewModel.getClockSyncProgress().observe(getViewLifecycleOwner(), this::updateClockProgressBar);
         viewModel.getSyncMessages().observe(getViewLifecycleOwner(), this::updateSyncMessages);
-        viewModel.getSyncedStaffCount().observe(getViewLifecycleOwner(), count -> updateCountView(tvStaffSyncedCount, "Staff Synced", count));
-        viewModel.getUnsyncedStaffCount().observe(getViewLifecycleOwner(), count -> updateCountView(tvStaffUnsyncedCount, "Staff Unsynced", count));
-        viewModel.getSyncedClockCount().observe(getViewLifecycleOwner(), count -> updateCountView(tvClockSyncedCount, "Clock Records Synced", count));
-        viewModel.getUnsyncedClockCount().observe(getViewLifecycleOwner(), count -> updateCountView(tvClockUnsyncedCount, "Clock Records Unsynced", count));
+        viewModel.getSyncedStaffCount().observe(getViewLifecycleOwner(), count -> updateCountView(tvStaffSyncedCount, "Synced", count));
+        viewModel.getUnsyncedStaffCount().observe(getViewLifecycleOwner(), count -> updateCountView(tvStaffUnsyncedCount, "Unsynced", count));
+        viewModel.getSyncedClockCount().observe(getViewLifecycleOwner(), count -> updateCountView(tvClockSyncedCount, "Synced", count));
+        viewModel.getUnsyncedClockCount().observe(getViewLifecycleOwner(), count -> updateCountView(tvClockUnsyncedCount, "Unsynced", count));
         viewModel.getClockSyncProgress().observe(getViewLifecycleOwner(), new Observer<Integer>() {
             @Override
             public void onChanged(Integer integer) {
