@@ -141,7 +141,9 @@ public class DataSyncViewModel extends AndroidViewModel {
         } catch (Exception e) {
             Log.e(TAG, "Sync failed", e);
             syncStatusLiveData.postValue(SyncStatus.FAILED);
-            syncMessageLiveData.postValue("Sync failed: " + e.getMessage());
+            List<String> messages = syncMessagesLiveData.getValue();
+            messages.add("Sync failed: " + e.getMessage());
+            syncMessagesLiveData.setValue(messages);
         }
     }
 
