@@ -37,7 +37,8 @@ public class DataSyncFragment extends Fragment {
     private DataSyncViewModel viewModel;
     private TextView tvStaffSyncedCount, tvStaffUnsyncedCount, tvClockSyncedCount, tvClockUnsyncedCount, tvSyncMessage;
     private MaterialButton btnSync;
-    private ProgressBar progressBar;
+    private ProgressBar staffProgressBar;
+    private ProgressBar clockProgressBar;
     private NonScrollableExpandableListView expandableListView;
     private SyncCategoryAdapter syncCategoryAdapter;
     private List<String> categories;
@@ -68,7 +69,8 @@ public class DataSyncFragment extends Fragment {
         tvClockUnsyncedCount = view.findViewById(R.id.tvClockUnsyncedCount);
         tvSyncMessage = view.findViewById(R.id.tvSyncMessage);
         btnSync = view.findViewById(R.id.btnSync);
-        progressBar = view.findViewById(R.id.progressBar);
+        staffProgressBar = view.findViewById(R.id.staffProgressBar);
+        clockProgressBar = view.findViewById(R.id.clockProgressBar);
     }
 
     private void setupToolbar() {
@@ -137,11 +139,11 @@ public class DataSyncFragment extends Fragment {
     }
 
     private void updateStaffProgressBar(int progress) {
-        progressBar.setProgress(progress);
+        staffProgressBar.setProgress(progress);
     }
 
     private void updateClockProgressBar(int progress) {
-        progressBar.setProgress(progress);
+        clockProgressBar.setProgress(progress);
     }
 
     private void setupSyncButton() {
