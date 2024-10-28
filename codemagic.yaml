@@ -1,45 +1,34 @@
+# codemagic.yaml
 workflows:
-  android-workflow:
-    name: Build Android APK with OpenCV SDK
+  android-opencv-workflow:
+    name: Android OpenCV Build
     max_build_duration: 60
     environment:
+      android_signing:
+        - keystore_reference
+      groups:
+        - google_play
       vars:
-        ANDROID_BUILD: "true"
-        OPENCV_SDK_PATH: "$HOME/OpenCV-android-sdk/sdk"
-
-
+        JAVA_HOME: /usr/lib/jvm/java-11-openjdk
+      flutter: stable
+    cache:
+      cache_paths:
+        - $HOME/.gradle/caches
+        - .gradle/caches
+        - ~/.opencv
     scripts:
-      # 1. Download the OpenCV Android SDK
-      - name: Download OpenCV Android SDK
+      - name: Set up OpenCV Android SDK
+        script: | 
+          wget -q https://github.com/opencv/opencv/releases/download/4.8.0/opencv-4.8.0-android-sdk.zip
+          unzip -q opencv-4.8.0-android-sdk.zip
+          mkdir -p ~/.opencv
+          mv OpenCV-android-sdk ~/.opencv/
+          echo "opencv.sdk.dir=$HOME/.opencv/OpenCV-android-sdk" >> local.properties
+      - name: Set up local.properties
         script: |
-          echo "Downloading OpenCV Android SDK..."
-          curl -L https://github.com/opencv/opencv/releases/download/4.10.0/opencv-4.10.0-android-sdk.zip -o opencv-android-sdk.zip
-          unzip opencv-android-sdk.zip
-          export OPENCV_SDK_PATH=$(pwd)/OpenCV-android-sdk/sdk
-
-      # 2. Set gradlew executable permissions
-      - name: Set gradlew executable permissions
+          echo "sdk.dir=$ANDROID_SDK_ROOT" >> local.properties
+      - name: Build Android app
         script: |
-          echo "Setting execute permissions for gradlew..."
-          chmod +x ./gradlew
-
-      # 3. Clean the project
-      - name: Clean Project
-        script: |
-          echo "Cleaning project..."
-          ./gradlew clean
-
-      # 4. Build the Android app
-      - name: Build APK
-        script: |
-          echo "Building APK with OpenCV..."
           ./gradlew assembleRelease
-
     artifacts:
-      - build/app/outputs/apk/release/app-release.apk
-      - build/app/outputs/bundle/release/app-release.aab
-
-    publishing:
-      email:
-        recipients:
-          - "your-email@example.com"
+      - app/build/outputs/**/*.apk
