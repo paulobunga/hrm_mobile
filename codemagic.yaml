@@ -13,38 +13,25 @@ workflows:
           echo "Downloading OpenCV Android SDK..."
           curl -L https://github.com/opencv/opencv/releases/download/4.10.0/opencv-4.10.0-android-sdk.zip -o opencv-android-sdk.zip
           unzip opencv-android-sdk.zip
-          export OPENCV_SDK_PATH=$(pwd)/OpenCV-android-sdk
+          export OPENCV_SDK_PATH=$(pwd)/OpenCV-android-sdk/sdk
 
-      # 2. Grant execute permissions to gradlew
+      # 2. Set gradlew executable permissions
       - name: Set gradlew executable permissions
         script: |
           echo "Setting execute permissions for gradlew..."
           chmod +x ./gradlew
 
-      # 3. Clean the project to ensure a fresh build
+      # 3. Clean the project
       - name: Clean Project
         script: |
           echo "Cleaning project..."
           ./gradlew clean
 
-      # 4. Configure OpenCV Linking
-      - name: Configure OpenCV Linking
-        script: |
-          echo "Configuring OpenCV linking..."
-          export OpenCV_DIR="$OPENCV_SDK_PATH/sdk/native/jni"
-          export LD_LIBRARY_PATH=$OPENCV_SDK_PATH/sdk/native/libs/arm64-v8a:$LD_LIBRARY_PATH
-
-      # 5. Build the Android app
+      # 4. Build the Android app
       - name: Build APK
         script: |
           echo "Building APK with OpenCV..."
           ./gradlew assembleRelease
-
-      # 6. Optional: Build Android App Bundle (AAB)
-      - name: Build AAB
-        script: |
-          echo "Building AAB..."
-          ./gradlew bundleRelease
 
     artifacts:
       - build/app/outputs/apk/release/app-release.apk
@@ -53,4 +40,4 @@ workflows:
     publishing:
       email:
         recipients:
-          - "paulobunga.one@gmail.com"
+          - "your-email@example.com"
