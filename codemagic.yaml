@@ -1,7 +1,7 @@
 workflows:
   android-workflow:
     name: Build Android APK with OpenCV SDK
-    max_build_duration: 60 # Reduced time as we skip OpenCV source build
+    max_build_duration: 60
     environment:
       vars:
         ANDROID_BUILD: "true"
@@ -15,26 +15,32 @@ workflows:
           unzip opencv-android-sdk.zip
           export OPENCV_SDK_PATH=$(pwd)/OpenCV-android-sdk
 
-      # 2. Clean the project to ensure a fresh build
+      # 2. Grant execute permissions to gradlew
+      - name: Set gradlew executable permissions
+        script: |
+          echo "Setting execute permissions for gradlew..."
+          chmod +x ./gradlew
+
+      # 3. Clean the project to ensure a fresh build
       - name: Clean Project
         script: |
           echo "Cleaning project..."
           ./gradlew clean
 
-      # 3. Configure OpenCV Linking
+      # 4. Configure OpenCV Linking
       - name: Configure OpenCV Linking
         script: |
           echo "Configuring OpenCV linking..."
           export OpenCV_DIR="$OPENCV_SDK_PATH/sdk/native/jni"
           export LD_LIBRARY_PATH=$OPENCV_SDK_PATH/sdk/native/libs/arm64-v8a:$LD_LIBRARY_PATH
 
-      # 4. Build the Android app
+      # 5. Build the Android app
       - name: Build APK
         script: |
           echo "Building APK with OpenCV..."
           ./gradlew assembleRelease
 
-      # 5. Optional: Build Android App Bundle (AAB)
+      # 6. Optional: Build Android App Bundle (AAB)
       - name: Build AAB
         script: |
           echo "Building AAB..."
@@ -47,4 +53,4 @@ workflows:
     publishing:
       email:
         recipients:
-          - "your-email@example.com"
+          - "paulobunga.one@gmail.com"
