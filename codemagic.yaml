@@ -5,6 +5,8 @@ workflows:
     environment:
       vars:
         ANDROID_BUILD: "true"
+        OPENCV_SDK_PATH: "$HOME/OpenCV-android-sdk/sdk"
+
 
     scripts:
       # 1. Download the OpenCV Android SDK
