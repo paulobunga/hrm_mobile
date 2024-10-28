@@ -1,0 +1,46 @@
+workflows:
+  android-workflow:
+    name: Build Android APK
+    max_build_duration: 60 # minutes
+    environment:
+      vars:
+        ANDROID_BUILD: "true"
+      android:
+        build: "android/app/build.gradle"
+      flutter: null
+      xcode: null
+
+    scripts:
+      # 1. Install dependencies
+      - name: Install Dependencies
+        script: |
+          echo "Setting up dependencies..."
+          chmod +x ./gradlew
+          ./gradlew dependencies
+
+      # 2. Clean the project to ensure a fresh build
+      - name: Clean Project
+        script: |
+          echo "Cleaning project..."
+          ./gradlew clean
+
+      # 3. Build the Android app
+      - name: Build APK
+        script: |
+          echo "Building APK..."
+          ./gradlew assembleRelease
+
+      # 4. Optional: Build Android App Bundle (AAB)
+      - name: Build AAB
+        script: |
+          echo "Building AAB..."
+          ./gradlew bundleRelease
+
+    artifacts:
+      - build/app/outputs/apk/release/app-release.apk
+      - build/app/outputs/bundle/release/app-release.aab
+
+    publishing:
+      email:
+        recipients:
+          - "your-email@example.com"
