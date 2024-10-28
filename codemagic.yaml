@@ -1,22 +1,19 @@
 workflows:
   android-workflow:
-    name: Build Android APK
-    max_build_duration: 60 # minutes
+    name: Build Android APK with OpenCV SDK
+    max_build_duration: 60 # Reduced time as we skip OpenCV source build
     environment:
       vars:
         ANDROID_BUILD: "true"
-      android:
-        build: "android/app/build.gradle"
-      flutter: null
-      xcode: null
 
     scripts:
-      # 1. Install dependencies
-      - name: Install Dependencies
+      # 1. Download the OpenCV Android SDK
+      - name: Download OpenCV Android SDK
         script: |
-          echo "Setting up dependencies..."
-          chmod +x ./gradlew
-          ./gradlew dependencies
+          echo "Downloading OpenCV Android SDK..."
+          curl -L https://github.com/opencv/opencv/releases/download/4.10.0/opencv-4.10.0-android-sdk.zip -o opencv-android-sdk.zip
+          unzip opencv-android-sdk.zip
+          export OPENCV_SDK_PATH=$(pwd)/OpenCV-android-sdk
 
       # 2. Clean the project to ensure a fresh build
       - name: Clean Project
@@ -24,13 +21,20 @@ workflows:
           echo "Cleaning project..."
           ./gradlew clean
 
-      # 3. Build the Android app
+      # 3. Configure OpenCV Linking
+      - name: Configure OpenCV Linking
+        script: |
+          echo "Configuring OpenCV linking..."
+          export OpenCV_DIR="$OPENCV_SDK_PATH/sdk/native/jni"
+          export LD_LIBRARY_PATH=$OPENCV_SDK_PATH/sdk/native/libs/arm64-v8a:$LD_LIBRARY_PATH
+
+      # 4. Build the Android app
       - name: Build APK
         script: |
-          echo "Building APK..."
+          echo "Building APK with OpenCV..."
           ./gradlew assembleRelease
 
-      # 4. Optional: Build Android App Bundle (AAB)
+      # 5. Optional: Build Android App Bundle (AAB)
       - name: Build AAB
         script: |
           echo "Building AAB..."
