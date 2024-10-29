@@ -19,8 +19,6 @@ workflows:
           echo "sdk.dir=$ANDROID_SDK_ROOT" > "$CM_BUILD_DIR/local.properties"
       - name: Build Android release
         script: | 
-          ./gradlew bundleRelease \
-              -PversionCode=$UPDATED_BUILD_NUMBER \
-              -PversionName=1.0.$UPDATED_BUILD_NUMBER 
+          ./gradlew bundleRelease
     artifacts:
       - app/build/outputs/**/*.apk
