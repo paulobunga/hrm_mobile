@@ -15,18 +15,7 @@ workflows:
       cache_paths:
         - $HOME/.gradle/caches
         - .gradle/caches
-        - ~/.opencv
     scripts:
-      - name: Set up OpenCV Android SDK
-        script: | 
-          wget -q https://github.com/opencv/opencv/releases/download/4.8.0/opencv-4.8.0-android-sdk.zip
-          unzip -q opencv-4.8.0-android-sdk.zip
-          mkdir -p ~/.opencv
-          mv OpenCV-android-sdk ~/.opencv/
-          echo "opencv.sdk.dir=$HOME/.opencv/OpenCV-android-sdk" >> local.properties
-      - name: Set up local.properties
-        script: |
-          echo "sdk.dir=$ANDROID_SDK_ROOT" >> local.properties
       - name: Build Android app
         script: |
           ./gradlew assembleRelease
