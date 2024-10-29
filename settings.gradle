@@ -16,6 +16,5 @@ rootProject.name = "HRM Attend"
 
 include ':app', ':opencv'
 
-// Use an environment variable to set the OpenCV SDK path, with fallback for local builds
-def opencvSdkPath = System.getenv("OPENCV_SDK_PATH") ?: "C:/tools/opencv/build/android/OpenCV-android-sdk/sdk"
-project(':opencv').projectDir = new File(opencvSdkPath)
+project(':opencv').projectDir = new File(rootDir, 'opencv-sdk/OpenCV-android-sdk/sdk/')
+//include ':opencv'
