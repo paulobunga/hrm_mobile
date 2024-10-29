@@ -7,7 +7,6 @@ workflows:
       android_signing:
         - timelead
       vars:
-        JAVA_HOME: /usr/lib/jvm/java-11-openjdk'
         PACKAGE_NAME: "ug.go.health.ihrisbiometric"
       flutter: stable
     cache:
