@@ -8,7 +8,6 @@ workflows:
         - timelead
       vars:
         PACKAGE_NAME: "ug.go.health.ihrisbiometric"
-      flutter: stable
     cache:
       cache_paths:
         - $HOME/.gradle/caches
