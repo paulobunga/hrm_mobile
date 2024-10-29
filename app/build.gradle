@@ -47,8 +47,8 @@ android {
         applicationId "ug.go.health.ihrisbiometric"
         minSdk 26
         targetSdk 34
-        versionCode getMyVersionCode()
-        versionName getMyVersionName()
+        versionCode 3
+        versionName "2.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         externalNativeBuild {
