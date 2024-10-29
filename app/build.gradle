@@ -29,6 +29,16 @@ sentry {
     authToken = "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"
 }
 
+// get version code from the specified property argument `-PversionCode` during the build call
+def getMyVersionCode = { ->
+    return project.hasProperty('versionCode') ? versionCode.toInteger() : -1
+}
+
+// get version name from the specified property argument `-PversionName` during the build call
+def getMyVersionName = { ->
+    return project.hasProperty('versionName') ? versionName : "1.0"
+}
+
 android {
     namespace 'ug.go.health.ihrisbiometric'
     compileSdk 34
@@ -37,8 +47,8 @@ android {
         applicationId "ug.go.health.ihrisbiometric"
         minSdk 26
         targetSdk 34
-        versionCode 2
-        versionName "2.0"
+        versionCode getMyVersionCode()
+        versionName getMyVersionName()
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         externalNativeBuild {
@@ -48,10 +58,27 @@ android {
         }
     }
 
+    signingConfigs {
+        release {
+            if (System.getenv()["CI"]) { // CI=true is exported by Codemagic
+                storeFile file(System.getenv()["CM_KEYSTORE_PATH"])
+                storePassword System.getenv()["CM_KEYSTORE_PASSWORD"]
+                keyAlias System.getenv()["CM_KEY_ALIAS"]
+                keyPassword System.getenv()["CM_KEY_PASSWORD"]
+            } else {
+                keyAlias keystoreProperties['keyAlias']
+                keyPassword keystoreProperties['keyPassword']
+                storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
+                storePassword keystoreProperties['storePassword']
+            }
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
     compileOptions {
