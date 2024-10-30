@@ -1,7 +1,0 @@
-org.opencv-pngs-0 /Users/paulobunga/Desktop/PROJECTS/hrm_mobile/opencv-android-sdk/sdk/build/generated/res/pngs/release
-org.opencv-resValues-1 /Users/paulobunga/Desktop/PROJECTS/hrm_mobile/opencv-android-sdk/sdk/build/generated/res/resValues/release
-org.opencv-mergeReleaseResources-2 /Users/paulobunga/Desktop/PROJECTS/hrm_mobile/opencv-android-sdk/sdk/build/intermediates/incremental/release/mergeReleaseResources/merged.dir
-org.opencv-mergeReleaseResources-3 /Users/paulobunga/Desktop/PROJECTS/hrm_mobile/opencv-android-sdk/sdk/build/intermediates/incremental/release/mergeReleaseResources/stripped.dir
-org.opencv-release-4 /Users/paulobunga/Desktop/PROJECTS/hrm_mobile/opencv-android-sdk/sdk/build/intermediates/merged_res/release/mergeReleaseResources
-org.opencv-java-5 /Users/paulobunga/Desktop/PROJECTS/hrm_mobile/opencv-android-sdk/sdk/java/res
-org.opencv-release-6 /Users/paulobunga/Desktop/PROJECTS/hrm_mobile/opencv-android-sdk/sdk/src/release/res

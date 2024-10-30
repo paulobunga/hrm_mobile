@@ -1,4 +1,0 @@
-/Users/paulobunga/Library/Android/sdk/cmake/3.22.1/bin/ninja \
-  -C \
-  /Users/paulobunga/Desktop/PROJECTS/hrm_mobile/opencv-android-sdk/sdk/.cxx/RelWithDebInfo/244j43s2/armeabi-v7a \
-  opencv_jni_shared

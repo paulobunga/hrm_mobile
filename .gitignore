@@ -21,6 +21,8 @@
 # OpenCV build files
 /opencv/build
 
+**/build/
+
 # Android local properties
 local.properties
 
