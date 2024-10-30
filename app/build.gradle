@@ -4,6 +4,15 @@ plugins {
     id "io.sentry.android.gradle" version "4.11.0"
 }
 
+def keystorePropertiesFile = rootProject.file("keystore.properties")
+def keystoreProperties = new Properties()
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+} else {
+    println("Warning: keystore.properties file not found, signing configurations may be incomplete.")
+}
+
+
 sentry {
     // Enables more detailed log output, e.g. for sentry-cli.
     //

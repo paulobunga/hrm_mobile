@@ -14,7 +14,8 @@ dependencyResolutionManagement {
 }
 rootProject.name = "HRM Attend"
 
-include ':app', ':opencv'
 
+include ':app', ':opencv'
 project(':opencv').projectDir = new File(rootDir, 'opencv-sdk/OpenCV-android-sdk/sdk/')
+
 //include ':opencv'
