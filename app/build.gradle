@@ -80,6 +80,11 @@ android {
             signingConfig signingConfigs.release
         }
     }
+
+    buildFeatures {
+        aidl true
+        buildConfig true
+    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -87,15 +92,19 @@ android {
 
     sourceSets {
         main {
-            jniLibs.srcDirs = ['src/main/jniLibs'] // Update the path to your jniLibs folder
+            jniLibs.srcDirs = ['src/main/jniLibs']
         }
     }
     externalNativeBuild {
 
     }
+    ndkVersion '26.1.10909125'
+    buildToolsVersion '35.0.0'
 }
 
 dependencies {
+
+    implementation project(":opencv")
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:1.9.22"
     implementation 'androidx.work:work-runtime:2.9.1'
@@ -133,7 +142,8 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.2.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
 
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    // implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation files('libs/CH34xUARTDriver.jar')
 
     implementation "androidx.security:security-crypto:1.1.0-alpha06"
@@ -164,6 +174,4 @@ dependencies {
 
     implementation 'io.sentry:sentry-okhttp:7.14.0'
 
-
-    implementation project(':opencv')
 }

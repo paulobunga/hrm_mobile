@@ -1,0 +1,52 @@
+{
+    "logs": [
+        {
+            "outputFile": "org.opencv-mergeReleaseResources-1:/values/values.xml",
+            "map": [
+                {
+                    "source": "/Users/paulobunga/Desktop/PROJECTS/hrm_mobile/opencv-android-sdk/sdk/java/res/values/attrs.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endLines": "9",
+                        "endColumns": "24",
+                        "endOffsets": "368"
+                    },
+                    "to": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endLines": "9",
+                        "endColumns": "24",
+                        "endOffsets": "361"
+                    }
+                }
+            ]
+        },
+        {
+            "outputFile": "org.opencv-release-3:/values/values.xml",
+            "map": [
+                {
+                    "source": "/Users/paulobunga/Desktop/PROJECTS/hrm_mobile/opencv-android-sdk/sdk/java/res/values/attrs.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endLines": "9",
+                        "endColumns": "24",
+                        "endOffsets": "368"
+                    },
+                    "to": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endLines": "9",
+                        "endColumns": "24",
+                        "endOffsets": "361"
+                    }
+                }
+            ]
+        }
+    ]
+}

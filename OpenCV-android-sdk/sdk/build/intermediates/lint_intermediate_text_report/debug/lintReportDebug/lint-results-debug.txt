@@ -1,0 +1,70 @@
+/Users/paulobunga/Desktop/PROJECTS/hrm_mobile/opencv-android-sdk/sdk/java/src/org/opencv/android/CameraGLSurfaceView.java:48: Warning: By convention, the custom view (CameraGLSurfaceView) and the declare-styleable (CameraBridgeViewBase) should have the same name (various editor features rely on this convention) [CustomViewStyleable]
+        TypedArray styledAttrs = getContext().obtainStyledAttributes(attrs, R.styleable.CameraBridgeViewBase);
+                                                                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "CustomViewStyleable":
+   The convention for custom views is to use a declare-styleable whose name
+   matches the custom view class name. The IDE relies on this convention such
+   that for example code completion can be offered for attributes in a custom
+   view in layout XML resource files.
+
+   (Similarly, layout parameter classes should use the suffix _Layout.)
+
+/Users/paulobunga/Desktop/PROJECTS/hrm_mobile/opencv-android-sdk/sdk/java/src/org/opencv/android/AsyncServiceHelper.java:347: Warning: Dynamically loading code using load is risky, please use loadLibrary instead when possible [UnsafeDynamicallyLoadedCode]
+            System.load(AbsPath);
+            ~~~~~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "UnsafeDynamicallyLoadedCode":
+   Dynamically loading code from locations other than the application's
+   library directory or the Android platform's built-in library directories is
+   dangerous, as there is an increased risk that the code could have been
+   tampered with. Applications should use loadLibrary when possible, which
+   provides increased assurance that libraries are loaded from one of these
+   safer locations. Application developers should use the features of their
+   development environment to place application native libraries into the lib
+   directory of their compiled APKs.
+
+/Users/paulobunga/Desktop/PROJECTS/hrm_mobile/opencv-android-sdk/sdk/java/src/org/opencv/android/Camera2Renderer.java:22: Warning: Unnecessary; SDK_INT is always >= 21 [ObsoleteSdkInt]
+@TargetApi(21)
+~~~~~~~~~~~~~~
+/Users/paulobunga/Desktop/PROJECTS/hrm_mobile/opencv-android-sdk/sdk/java/src/org/opencv/android/CameraGLRendererBase.java:20: Warning: Unnecessary; SDK_INT is always >= 15 [ObsoleteSdkInt]
+@TargetApi(15)
+~~~~~~~~~~~~~~
+/Users/paulobunga/Desktop/PROJECTS/hrm_mobile/opencv-android-sdk/sdk/java/src/org/opencv/android/CameraGLSurfaceView.java:52: Warning: Unnecessary; SDK_INT is always >= 21 [ObsoleteSdkInt]
+        if(android.os.Build.VERSION.SDK_INT >= 21)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/paulobunga/Desktop/PROJECTS/hrm_mobile/opencv-android-sdk/sdk/java/src/org/opencv/android/CameraRenderer.java:12: Warning: Unnecessary; SDK_INT is always >= 15 [ObsoleteSdkInt]
+@TargetApi(15)
+~~~~~~~~~~~~~~
+/Users/paulobunga/Desktop/PROJECTS/hrm_mobile/opencv-android-sdk/sdk/java/src/org/opencv/android/CameraRenderer.java:49: Warning: Unnecessary; SDK_INT is always >= 21 [ObsoleteSdkInt]
+            if(mCamera == null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
+                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/paulobunga/Desktop/PROJECTS/hrm_mobile/opencv-android-sdk/sdk/java/src/org/opencv/android/CameraRenderer.java:63: Warning: Unnecessary; SDK_INT is always >= 21 [ObsoleteSdkInt]
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/paulobunga/Desktop/PROJECTS/hrm_mobile/opencv-android-sdk/sdk/java/src/org/opencv/android/JavaCamera2View.java:41: Warning: Unnecessary; SDK_INT is always >= 21 [ObsoleteSdkInt]
+@TargetApi(21)
+~~~~~~~~~~~~~~
+/Users/paulobunga/Desktop/PROJECTS/hrm_mobile/opencv-android-sdk/sdk/java/src/org/opencv/android/JavaCameraView.java:84: Warning: Unnecessary; SDK_INT is always >= 21 [ObsoleteSdkInt]
+                if(mCamera == null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
+                                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/paulobunga/Desktop/PROJECTS/hrm_mobile/opencv-android-sdk/sdk/java/src/org/opencv/android/JavaCameraView.java:98: Warning: Unnecessary; SDK_INT is always >= 21 [ObsoleteSdkInt]
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/paulobunga/Desktop/PROJECTS/hrm_mobile/opencv-android-sdk/sdk/java/src/org/opencv/android/JavaCameraView.java:167: Warning: Unnecessary; SDK_INT is always >= 21 [ObsoleteSdkInt]
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH && !android.os.Build.MODEL.equals("GT-I9100"))
+                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/paulobunga/Desktop/PROJECTS/hrm_mobile/opencv-android-sdk/sdk/java/src/org/opencv/android/JavaCameraView.java:208: Warning: Unnecessary; SDK_INT is always >= 21 [ObsoleteSdkInt]
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "ObsoleteSdkInt":
+   This check flags version checks that are not necessary, because the
+   minSdkVersion (or surrounding known API level) is already at least as high
+   as the version checked for.
+
+   Similarly, it also looks for resources in -vNN folders, such as values-v14
+   where the version qualifier is less than or equal to the minSdkVersion,
+   where the contents should be merged into the best folder.
+
+0 errors, 13 warnings

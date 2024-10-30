@@ -1,0 +1,21 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /Users/paulobunga/Desktop/PROJECTS/hrm_mobile/opencv-android-sdk/sdk/java/AndroidManifest.xml:2:1-6:12
+INJECTED from /Users/paulobunga/Desktop/PROJECTS/hrm_mobile/opencv-android-sdk/sdk/java/AndroidManifest.xml:2:1-6:12
+	package
+		ADDED from /Users/paulobunga/Desktop/PROJECTS/hrm_mobile/opencv-android-sdk/sdk/java/AndroidManifest.xml:3:7-27
+		INJECTED from /Users/paulobunga/Desktop/PROJECTS/hrm_mobile/opencv-android-sdk/sdk/java/AndroidManifest.xml
+	xmlns:android
+		ADDED from /Users/paulobunga/Desktop/PROJECTS/hrm_mobile/opencv-android-sdk/sdk/java/AndroidManifest.xml:2:11-69
+uses-permission#android.permission.CAMERA
+ADDED from /Users/paulobunga/Desktop/PROJECTS/hrm_mobile/opencv-android-sdk/sdk/java/AndroidManifest.xml:5:7-67
+	android:name
+		ADDED from /Users/paulobunga/Desktop/PROJECTS/hrm_mobile/opencv-android-sdk/sdk/java/AndroidManifest.xml:5:24-64
+uses-sdk
+INJECTED from /Users/paulobunga/Desktop/PROJECTS/hrm_mobile/opencv-android-sdk/sdk/java/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /Users/paulobunga/Desktop/PROJECTS/hrm_mobile/opencv-android-sdk/sdk/java/AndroidManifest.xml
+INJECTED from /Users/paulobunga/Desktop/PROJECTS/hrm_mobile/opencv-android-sdk/sdk/java/AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from /Users/paulobunga/Desktop/PROJECTS/hrm_mobile/opencv-android-sdk/sdk/java/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /Users/paulobunga/Desktop/PROJECTS/hrm_mobile/opencv-android-sdk/sdk/java/AndroidManifest.xml

@@ -16,6 +16,4 @@ rootProject.name = "HRM Attend"
 
 
 include ':app', ':opencv'
-project(':opencv').projectDir = new File(rootDir, 'opencv-sdk/OpenCV-android-sdk/sdk/')
-
-//include ':opencv'
+project(':opencv').projectDir = new File('opencv-android-sdk/sdk')

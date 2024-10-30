@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<issues format="6" by="lint 8.5.1">
+
+    <issue
+        id="CustomViewStyleable"
+        severity="Warning"
+        message="By convention, the custom view (`CameraGLSurfaceView`) and the declare-styleable (`CameraBridgeViewBase`) should have the same name (various editor features rely on this convention)"
+        category="Correctness"
+        priority="6"
+        summary="Mismatched Styleable/Custom View Name"
+        explanation="The convention for custom views is to use a `declare-styleable` whose name matches the custom view class name. The IDE relies on this convention such that for example code completion can be offered for attributes in a custom view in layout XML resource files.&#xA;&#xA;(Similarly, layout parameter classes should use the suffix `_Layout`.)"
+        errorLine1="        TypedArray styledAttrs = getContext().obtainStyledAttributes(attrs, R.styleable.CameraBridgeViewBase);"
+        errorLine2="                                                                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="/Users/paulobunga/Desktop/PROJECTS/hrm_mobile/opencv-android-sdk/sdk/java/src/org/opencv/android/CameraGLSurfaceView.java"
+            line="48"
+            column="77"/>
+    </issue>
+
+    <issue
+        id="UnsafeDynamicallyLoadedCode"
+        severity="Warning"
+        message="Dynamically loading code using `load` is risky, please use `loadLibrary` instead when possible"
+        category="Security"
+        priority="4"
+        summary="`load` used to dynamically load code"
+        explanation="Dynamically loading code from locations other than the application&apos;s library directory or the Android platform&apos;s built-in library directories is dangerous, as there is an increased risk that the code could have been tampered with. Applications should use `loadLibrary` when possible, which provides increased assurance that libraries are loaded from one of these safer locations. Application developers should use the features of their development environment to place application native libraries into the lib directory of their compiled APKs."
+        errorLine1="            System.load(AbsPath);"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="/Users/paulobunga/Desktop/PROJECTS/hrm_mobile/opencv-android-sdk/sdk/java/src/org/opencv/android/AsyncServiceHelper.java"
+            line="347"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        severity="Warning"
+        message="Unnecessary; SDK_INT is always >= 21"
+        category="Performance"
+        priority="6"
+        summary="Obsolete SDK_INT Version Check"
+        explanation="This check flags version checks that are not necessary, because the `minSdkVersion` (or surrounding known API level) is already at least as high as the version checked for.&#xA;&#xA;Similarly, it also looks for resources in `-vNN` folders, such as `values-v14` where the version qualifier is less than or equal to the `minSdkVersion`, where the contents should be merged into the best folder."
+        errorLine1="@TargetApi(21)"
+        errorLine2="~~~~~~~~~~~~~~">
+        <location
+            file="/Users/paulobunga/Desktop/PROJECTS/hrm_mobile/opencv-android-sdk/sdk/java/src/org/opencv/android/Camera2Renderer.java"
+            line="22"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        severity="Warning"
+        message="Unnecessary; SDK_INT is always >= 15"
+        category="Performance"
+        priority="6"
+        summary="Obsolete SDK_INT Version Check"
+        explanation="This check flags version checks that are not necessary, because the `minSdkVersion` (or surrounding known API level) is already at least as high as the version checked for.&#xA;&#xA;Similarly, it also looks for resources in `-vNN` folders, such as `values-v14` where the version qualifier is less than or equal to the `minSdkVersion`, where the contents should be merged into the best folder."
+        errorLine1="@TargetApi(15)"
+        errorLine2="~~~~~~~~~~~~~~">
+        <location
+            file="/Users/paulobunga/Desktop/PROJECTS/hrm_mobile/opencv-android-sdk/sdk/java/src/org/opencv/android/CameraGLRendererBase.java"
+            line="20"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        severity="Warning"
+        message="Unnecessary; SDK_INT is always >= 21"
+        category="Performance"
+        priority="6"
+        summary="Obsolete SDK_INT Version Check"
+        explanation="This check flags version checks that are not necessary, because the `minSdkVersion` (or surrounding known API level) is already at least as high as the version checked for.&#xA;&#xA;Similarly, it also looks for resources in `-vNN` folders, such as `values-v14` where the version qualifier is less than or equal to the `minSdkVersion`, where the contents should be merged into the best folder."
+        errorLine1="        if(android.os.Build.VERSION.SDK_INT >= 21)"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="/Users/paulobunga/Desktop/PROJECTS/hrm_mobile/opencv-android-sdk/sdk/java/src/org/opencv/android/CameraGLSurfaceView.java"
+            line="52"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        severity="Warning"
+        message="Unnecessary; SDK_INT is always >= 15"
+        category="Performance"
+        priority="6"
+        summary="Obsolete SDK_INT Version Check"
+        explanation="This check flags version checks that are not necessary, because the `minSdkVersion` (or surrounding known API level) is already at least as high as the version checked for.&#xA;&#xA;Similarly, it also looks for resources in `-vNN` folders, such as `values-v14` where the version qualifier is less than or equal to the `minSdkVersion`, where the contents should be merged into the best folder."
+        errorLine1="@TargetApi(15)"
+        errorLine2="~~~~~~~~~~~~~~">
+        <location
+            file="/Users/paulobunga/Desktop/PROJECTS/hrm_mobile/opencv-android-sdk/sdk/java/src/org/opencv/android/CameraRenderer.java"
+            line="12"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        severity="Warning"
+        message="Unnecessary; SDK_INT is always >= 21"
+        category="Performance"
+        priority="6"
+        summary="Obsolete SDK_INT Version Check"
+        explanation="This check flags version checks that are not necessary, because the `minSdkVersion` (or surrounding known API level) is already at least as high as the version checked for.&#xA;&#xA;Similarly, it also looks for resources in `-vNN` folders, such as `values-v14` where the version qualifier is less than or equal to the `minSdkVersion`, where the contents should be merged into the best folder."
+        errorLine1="            if(mCamera == null &amp;&amp; Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {"
+        errorLine2="                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="/Users/paulobunga/Desktop/PROJECTS/hrm_mobile/opencv-android-sdk/sdk/java/src/org/opencv/android/CameraRenderer.java"
+            line="49"
+            column="35"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        severity="Warning"
+        message="Unnecessary; SDK_INT is always >= 21"
+        category="Performance"
+        priority="6"
+        summary="Obsolete SDK_INT Version Check"
+        explanation="This check flags version checks that are not necessary, because the `minSdkVersion` (or surrounding known API level) is already at least as high as the version checked for.&#xA;&#xA;Similarly, it also looks for resources in `-vNN` folders, such as `values-v14` where the version qualifier is less than or equal to the `minSdkVersion`, where the contents should be merged into the best folder."
+        errorLine1="            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {"
+        errorLine2="                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="/Users/paulobunga/Desktop/PROJECTS/hrm_mobile/opencv-android-sdk/sdk/java/src/org/opencv/android/CameraRenderer.java"
+            line="63"
+            column="17"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        severity="Warning"
+        message="Unnecessary; SDK_INT is always >= 21"
+        category="Performance"
+        priority="6"
+        summary="Obsolete SDK_INT Version Check"
+        explanation="This check flags version checks that are not necessary, because the `minSdkVersion` (or surrounding known API level) is already at least as high as the version checked for.&#xA;&#xA;Similarly, it also looks for resources in `-vNN` folders, such as `values-v14` where the version qualifier is less than or equal to the `minSdkVersion`, where the contents should be merged into the best folder."
+        errorLine1="@TargetApi(21)"
+        errorLine2="~~~~~~~~~~~~~~">
+        <location
+            file="/Users/paulobunga/Desktop/PROJECTS/hrm_mobile/opencv-android-sdk/sdk/java/src/org/opencv/android/JavaCamera2View.java"
+            line="41"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        severity="Warning"
+        message="Unnecessary; SDK_INT is always >= 21"
+        category="Performance"
+        priority="6"
+        summary="Obsolete SDK_INT Version Check"
+        explanation="This check flags version checks that are not necessary, because the `minSdkVersion` (or surrounding known API level) is already at least as high as the version checked for.&#xA;&#xA;Similarly, it also looks for resources in `-vNN` folders, such as `values-v14` where the version qualifier is less than or equal to the `minSdkVersion`, where the contents should be merged into the best folder."
+        errorLine1="                if(mCamera == null &amp;&amp; Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {"
+        errorLine2="                                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="/Users/paulobunga/Desktop/PROJECTS/hrm_mobile/opencv-android-sdk/sdk/java/src/org/opencv/android/JavaCameraView.java"
+            line="84"
+            column="39"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        severity="Warning"
+        message="Unnecessary; SDK_INT is always >= 21"
+        category="Performance"
+        priority="6"
+        summary="Obsolete SDK_INT Version Check"
+        explanation="This check flags version checks that are not necessary, because the `minSdkVersion` (or surrounding known API level) is already at least as high as the version checked for.&#xA;&#xA;Similarly, it also looks for resources in `-vNN` folders, such as `values-v14` where the version qualifier is less than or equal to the `minSdkVersion`, where the contents should be merged into the best folder."
+        errorLine1="                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {"
+        errorLine2="                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="/Users/paulobunga/Desktop/PROJECTS/hrm_mobile/opencv-android-sdk/sdk/java/src/org/opencv/android/JavaCameraView.java"
+            line="98"
+            column="21"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        severity="Warning"
+        message="Unnecessary; SDK_INT is always >= 21"
+        category="Performance"
+        priority="6"
+        summary="Obsolete SDK_INT Version Check"
+        explanation="This check flags version checks that are not necessary, because the `minSdkVersion` (or surrounding known API level) is already at least as high as the version checked for.&#xA;&#xA;Similarly, it also looks for resources in `-vNN` folders, such as `values-v14` where the version qualifier is less than or equal to the `minSdkVersion`, where the contents should be merged into the best folder."
+        errorLine1="                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH &amp;&amp; !android.os.Build.MODEL.equals(&quot;GT-I9100&quot;))"
+        errorLine2="                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="/Users/paulobunga/Desktop/PROJECTS/hrm_mobile/opencv-android-sdk/sdk/java/src/org/opencv/android/JavaCameraView.java"
+            line="167"
+            column="25"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        severity="Warning"
+        message="Unnecessary; SDK_INT is always >= 21"
+        category="Performance"
+        priority="6"
+        summary="Obsolete SDK_INT Version Check"
+        explanation="This check flags version checks that are not necessary, because the `minSdkVersion` (or surrounding known API level) is already at least as high as the version checked for.&#xA;&#xA;Similarly, it also looks for resources in `-vNN` folders, such as `values-v14` where the version qualifier is less than or equal to the `minSdkVersion`, where the contents should be merged into the best folder."
+        errorLine1="                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {"
+        errorLine2="                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="/Users/paulobunga/Desktop/PROJECTS/hrm_mobile/opencv-android-sdk/sdk/java/src/org/opencv/android/JavaCameraView.java"
+            line="208"
+            column="25"/>
+    </issue>
+
+</issues>

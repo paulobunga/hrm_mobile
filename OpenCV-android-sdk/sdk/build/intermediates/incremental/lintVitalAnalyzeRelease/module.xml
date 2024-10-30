@@ -1,0 +1,19 @@
+<lint-module
+    format="1"
+    dir="/Users/paulobunga/Desktop/PROJECTS/hrm_mobile/opencv-android-sdk/sdk"
+    name=":opencv"
+    type="LIBRARY"
+    maven="HRM Attend:opencv:unspecified"
+    agpVersion="8.5.1"
+    buildFolder="build"
+    bootClassPath="/Users/paulobunga/Library/Android/sdk/platforms/android-34/android.jar:/Users/paulobunga/Library/Android/sdk/build-tools/34.0.0/core-lambda-stubs.jar"
+    javaSourceLevel="1.8"
+    compileTarget="android-34"
+    neverShrinking="true">
+  <lintOptions
+      abortOnError="true"
+      absolutePaths="true"
+      checkReleaseBuilds="true"
+      explainIssues="true"/>
+  <variant name="release"/>
+</lint-module>

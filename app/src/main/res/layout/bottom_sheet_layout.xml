@@ -141,7 +141,7 @@
     </LinearLayout>
 
     <!-- New Notifications Option -->
-    <LinearLayout
+    <!-- <LinearLayout
         android:id="@+id/notifications_option"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -159,7 +159,7 @@
             android:layout_marginStart="16dp"
             android:text="Notifications"
             android:textSize="16sp" />
-    </LinearLayout>
+    </LinearLayout> -->
 
     <!-- Space to push the logout button to the bottom -->
     <Space

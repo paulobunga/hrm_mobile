@@ -1,0 +1,4 @@
+/Users/paulobunga/Library/Android/sdk/cmake/3.22.1/bin/ninja \
+  -C \
+  /Users/paulobunga/Desktop/PROJECTS/hrm_mobile/opencv-android-sdk/sdk/.cxx/Debug/2s485h4n/arm64-v8a \
+  opencv_jni_shared

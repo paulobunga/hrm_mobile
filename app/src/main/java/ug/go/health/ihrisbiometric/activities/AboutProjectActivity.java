@@ -81,8 +81,10 @@ public class AboutProjectActivity extends AppCompatActivity {
                 "</style>" +
                 "</head>" +
                 "<body>" +
-                "<h1>HRM Attend Scanner App - Empowering Healthcare in Uganda</h1>" +
-                "<h2><i>The HRM Attend App offers a comprehensive attendance verification system that goes beyond traditional methods. In addition to utilizing fingerprint readers, the app leverages the power of AI-powered face recognition technology. This advanced feature provides healthcare providers with an alternative option for attendance verification based on facial recognition.</i></h2>" +
+                "<h1>HRM Attend Mobile</h1>" +
+                "<h2>HRM Attend Mobile is developed by the Government of Uganda via the Prime Minister's Delivery Unit and Ministry of Health with funding from the World Bank. The application enhances service delivery by ensuring health worker presence. It build upon a successful pilot in Teso and Eastern Uganda, supported by USAID-Strengthening Human Resource for Health and DFID. <br />" +
+                "Version 2 introduces face recognition for attendance and verification which complements fingerprint verification provided on supported devices. This innovation recognizes the collaborative efforts between the Governemnt of Uganda, the Prime Minister's Delivery Unit, the Ministry Of Health, the World Bank, USAID and DFID. " +
+                "</h2>" +
                 "<img src='file:///android_res/drawable/moh_logo.png' alt='Ministry of Health Uganda Logo' />" +
                 "<h2>Our Partners</h2>" +
                 "<hr />" +
